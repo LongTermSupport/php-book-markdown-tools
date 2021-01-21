@@ -1,0 +1,20 @@
+{
+    "name": "longtermsupport/php-book-markdown-tools",
+    "description": "Tools for processing markdown, especially targeted towards book authorship",
+    "keywords": ["markdown", "authorship"],
+    "license": "GPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Joseph Edmonds",
+            "email": "info@ltscommerce.dev"
+        }
+    ],
+    "require": {
+		  "php": ">= 8.0.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "LTS\\MarkdownTools\\": "src/"
+        }
+    }
+}
