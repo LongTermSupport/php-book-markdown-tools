@@ -1,5 +1,5 @@
 {
-    "name": "longtermsupport/php-book-markdown-tools",
+    "name": "lts/php-book-markdown-tools",
     "description": "Tools for processing markdown, especially targeted towards book authorship",
     "keywords": ["markdown", "authorship"],
     "license": "GPL-3.0-or-later",
