@@ -21,7 +21,7 @@ final class FileProcessor
     {
         try {
             $contents = \Safe\file_get_contents($path);
-            $contents = $this->processContents(contents: $contents, currentFileDir: basename($path));
+            $contents = $this->processContents(contents: $contents, currentFileDir: dirname($path));
             \Safe\file_put_contents($path, $contents);
         } catch (Throwable $throwable) {
             throw new ProcessingException($throwable->getMessage(), $throwable->getCode(), $throwable);

@@ -31,6 +31,12 @@ final class DirectoryProcessor
     /** @return RecursiveIteratorIterator<RecursiveDirectoryIterator> */
     private function getIterator(RunConfig $config): RecursiveIteratorIterator
     {
+        if (false === is_dir($config->getPathToChapters())) {
+            throw new \RuntimeException(
+                $config->getPathToChapters() . ' is not a directory, config is invalid');
+
+        }
+
         return new RecursiveIteratorIterator(
             new RecursiveDirectoryIterator($config->getPathToChapters()),
             RecursiveIteratorIterator::LEAVES_ONLY
