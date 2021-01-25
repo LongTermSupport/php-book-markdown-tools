@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace LTS\MarkdownTools\Process;
 
+use LTS\MarkdownTools\Helper;
 use LTS\MarkdownTools\ProcessorInterface;
 use RuntimeException;
 
@@ -38,9 +39,10 @@ REGEXP;
 
     private function getCodeRealPath(string $currentFileDir, string $codeRelativePath): string
     {
-        $realpath = realpath($currentFileDir . '/' . $codeRelativePath);
+        $resolvedPath = Helper::resolveRelativePath($currentFileDir . '/' . $codeRelativePath);
+        $realpath     = realpath($resolvedPath);
         if ($realpath === false) {
-            throw new RuntimeException('Failed finding realpath for ' . $realpath);
+            throw new RuntimeException('Failed finding realpath for ' . $resolvedPath);
         }
 
         return $realpath;

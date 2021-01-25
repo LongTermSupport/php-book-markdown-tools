@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace LTS\MarkdownTools\Test;
 
 use InvalidArgumentException;
+use LTS\MarkdownTools\Helper;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use RuntimeException;
@@ -49,8 +50,8 @@ final class Util
      */
     public static function getFilesContents(string $dir): array
     {
-        $dir       = self::resolveRelativePath($dir);
-        $keyOffset = strlen(string: self::resolveRelativePath(self::VAR_PATH));
+        $dir       = Helper::resolveRelativePath($dir);
+        $keyOffset = strlen(string: Helper::resolveRelativePath(self::VAR_PATH));
         $return    = [];
         $iterator  = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir));
         foreach ($iterator as $path => $fileInfo) {
@@ -64,38 +65,15 @@ final class Util
         return $return;
     }
 
-    private static function resolveRelativePath(string $relativePath): string
-    {
-        if (str_starts_with(haystack: $relativePath, needle: '/') === false) {
-            throw new RuntimeException('Relative path must start at root /, you passed ' . $relativePath);
-        }
-        $path = [];
-        foreach (explode('/', $relativePath) as $part) {
-            if ($part === '' || $part === '.') {
-                continue;
-            }
 
-            if ($part !== '..') {
-                $path[] = $part;
-                continue;
-            }
-            if (count($path) > 0) {
-                array_pop($path);
-                continue;
-            }
-            throw new RuntimeException('Relative path goes too high');
-        }
-
-        return '/' . implode('/', $path);
-    }
 
     private static function assertDirInVarDir(string $dir): void
     {
         if (str_starts_with(haystack: $dir, needle: '/') === false) {
             throw new InvalidArgumentException('invalid directory ' . $dir . ', must start with /');
         }
-        $varPath = self::resolveRelativePath(relativePath: self::VAR_PATH);
-        $dir     = self::resolveRelativePath(relativePath: $dir);
+        $varPath = Helper::resolveRelativePath(relativePath: self::VAR_PATH);
+        $dir     = Helper::resolveRelativePath(relativePath: $dir);
         if (str_starts_with(haystack: $dir, needle: $varPath) === false) {
             throw new InvalidArgumentException(
                 'invalid directory, ' . $dir .
