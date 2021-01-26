@@ -7,11 +7,12 @@ namespace LTS\MarkdownTools\Process\BlockQuote;
 use LTS\MarkdownTools\CachingUrlFetcher;
 use RuntimeException;
 
-final class DocsLinkProcess implements BlockQuoteProcess
+final class GithubLinkProcess implements BlockQuoteProcess
 {
     private const URL_REGEXP = <<<'REGEXP'
-%https://www.php.net/.+%
+%https://github.com/.+%
 REGEXP;
+
     public function __construct(private CachingUrlFetcher $urlFetcher)
     {
     }

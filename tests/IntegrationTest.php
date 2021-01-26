@@ -22,7 +22,8 @@ class IntegrationTest extends TestCase
             self::TEST_CHAPTER1_PATH,
             \Safe\file_get_contents(self::SOURCE_CHAPTER1_PATH)
         );
-        Factory::create()->run(new RunConfig(self::TEST_CHAPTERS_DIR));
+        $config = new RunConfig(self::TEST_CHAPTERS_DIR, __DIR__ . '/../var/cache/');
+        Factory::create($config)->run($config);
         self::assertFileEquals(self::EXPECTED_CHAPTER1_PATH, self::TEST_CHAPTER1_PATH);
     }
 }

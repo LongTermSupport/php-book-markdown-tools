@@ -7,8 +7,14 @@ namespace LTS\MarkdownTools;
 final class RunConfig
 {
     public function __construct(
-        private string $pathToChapters
+        private string $pathToChapters,
+        private string $cachePath
     ) {
+    }
+
+    public function getCachePath(): string
+    {
+        return $this->cachePath;
     }
 
     public function getPathToChapters(): string
