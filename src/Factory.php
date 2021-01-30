@@ -14,7 +14,8 @@ final class Factory
 {
     public static function create(RunConfig $config): DirectoryProcessor
     {
-        $urlFetcher = new CachingUrlFetcher($config->getCachePath());
+        $cache      =new Cache($config->getCachePath());
+        $urlFetcher = new CachingUrlFetcher($cache);
 
         return new DirectoryProcessor(
             new FileProcessor(

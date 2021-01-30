@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace LTS\MarkdownTools\Process\BlockQuote;
 
 use LTS\MarkdownTools\CachingUrlFetcher;
-use RuntimeException;
 
 final class DocsLinkProcess implements BlockQuoteProcess
 {
@@ -18,7 +17,6 @@ REGEXP;
     {
         $this->linkProcessor = $linkProcessor ?? new LinkProcessor(self::URL_REGEXP, $this->urlFetcher);
     }
-
 
     public function shouldProcess(string $blockquote): bool
     {

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace LTS\MarkdownTools\Test\Process;
 
 use LTS\MarkdownTools\Process\RunnableCodeSnippetProcess;
-use LTS\MarkdownTools\Test\Util;
+use LTS\MarkdownTools\Test\TestHelper;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -45,9 +45,9 @@ MARKDOWN;
     /** @test */
     public function itCanGetCodeSnippets(): void
     {
-        Util::createTestFile(contents: self::TEST_CODE, filename: __FUNCTION__ . '.php');
+        TestHelper::createTestFile(contents: self::TEST_CODE, filename: __FUNCTION__ . '.php');
         $mdContents = \Safe\sprintf(self::MARKDOWN_SNIPPET, './' . __FUNCTION__ . '.php');
-        $actual     = self::getProcessor()->getProcessedContents($mdContents, Util::VAR_PATH);
+        $actual     = self::getProcessor()->getProcessedContents($mdContents, TestHelper::VAR_PATH);
         $expected   = '# some content blah
 
 [Code Snippet](./itCanGetCodeSnippets.php)
@@ -67,9 +67,9 @@ MARKDOWN;
     /** @test */
     public function itCanGetAndRunCodeSnippets(): void
     {
-        Util::createTestFile(contents: self::TEST_CODE_RUNNABLE, filename: __FUNCTION__ . '.php');
+        TestHelper::createTestFile(contents: self::TEST_CODE_RUNNABLE, filename: __FUNCTION__ . '.php');
         $mdContents = \Safe\sprintf(self::MARKDOWN_SNIPPET, './' . __FUNCTION__ . '.php');
-        $actual     = self::getProcessor()->getProcessedContents($mdContents, Util::VAR_PATH);
+        $actual     = self::getProcessor()->getProcessedContents($mdContents, TestHelper::VAR_PATH);
         $expected   = '# some content blah
 
 [Code Snippet](./itCanGetAndRunCodeSnippets.php)

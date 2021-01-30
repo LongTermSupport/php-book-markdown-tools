@@ -2,4 +2,6 @@
 
 declare(strict_types=1);
 
-echo "This, that, the other";
+namespace LTS\MarkdownTools\Test\Fixture\Foo\Bing\Bang\Bong;
+
+echo 'This, that, the other';

@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace LTS\MarkdownTools\Process\BlockQuote\Link;
 
 use LTS\MarkdownTools\Cache;
+use RuntimeException;
+use Throwable;
 
 final class WikipediaLinkShortener implements LinkShortenerInterface
 {
@@ -28,9 +30,7 @@ curl 'https://meta.wikimedia.org/w/api.php' \
 --data-raw 'action=shortenurl&format=json&url=%s' \
 --compressed 2>&1
 CMDLINE;
-    /**
-     *
-     */
+
     private CachingLinkShortener $cachingLinkShortener;
 
     public function __construct(Cache $cache = null)
@@ -38,35 +38,37 @@ CMDLINE;
         $this->cachingLinkShortener = new CachingLinkShortener($this->getCallable(), $cache);
     }
 
+    public function getShortenedLinkMarkDown(string $longUrl): string
+    {
+        $shortUrl = $this->cachingLinkShortener->getShortUrl($longUrl);
+
+        return "[{$shortUrl}]({$longUrl})";
+    }
 
     private function getCallable(): ShortenCallableInterface
     {
-        return new class implements ShortenCallableInterface {
+        return new class() implements ShortenCallableInterface {
             public function __invoke(string $longUrl): string
             {
                 $cmd = sprintf(WikipediaLinkShortener::CURL_CMD, urlencode($longUrl));
                 exec($cmd, $output, $exitCode);
                 $output = implode("\n", $output);
-                if (0 !== $exitCode) {
-                    throw new \RuntimeException("Failed getting wikipedia short URL, command output:\n$output");
+                if ($exitCode !== 0) {
+                    throw new RuntimeException("Failed getting wikipedia short URL, command output:\n{$output}");
                 }
 
                 try {
-                    $json    = strstr(haystack: $output, needle: '{');
+                    $json = strstr(haystack: $output, needle: '{');
+                    if ($json === false) {
+                        throw new RuntimeException("Output is not json:\n{$output}");
+                    }
                     $decoded = \Safe\json_decode(json: $json, assoc: true);
 
                     return $decoded['shortenurl']['shorturl'];
-                } catch (\Throwable $throwable) {
-                    throw new \RuntimeException("Failed parsing short URL response, raw output:\n$output");
+                } catch (Throwable $throwable) {
+                    throw new RuntimeException("Failed parsing short URL response, raw output:\n{$output}");
                 }
             }
         };
-    }
-
-    public function getShortenedLinkMarkDown(string $longUrl): string
-    {
-        $shortUrl = $this->cachingLinkShortener->getShortUrl($longUrl);
-
-        return "[$shortUrl]($longUrl)";
     }
 }

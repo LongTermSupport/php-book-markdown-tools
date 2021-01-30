@@ -6,12 +6,13 @@ namespace LTS\MarkdownTools\Test\Process\BlockQuote;
 
 use LTS\MarkdownTools\CachingUrlFetcher;
 use LTS\MarkdownTools\Process\BlockQuote\DocsLinkProcess;
+use LTS\MarkdownTools\Test\TestHelper;
 use PHPUnit\Framework\TestCase;
 
 /**
  * @internal
- * @covers \LTS\MarkdownTools\Process\BlockQuote\WikipediaLinkProcess
  * @covers \LTS\MarkdownTools\Process\BlockQuote\LinkProcessor
+ * @covers \LTS\MarkdownTools\Process\BlockQuote\WikipediaLinkProcess
  *
  * @small
  */
@@ -22,6 +23,13 @@ final class DocsLinkProcessTest extends TestCase
 > https://www.php.net/manual/en/language.types.boolean.php
 > kjhasdkj kajsd
 MARKDOWN;
+    private DocsLinkProcess $process;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->process = new DocsLinkProcess(new CachingUrlFetcher(TestHelper::getCache()));
+    }
 
     /** @dataProvider
      * @return array<mixed>
@@ -53,14 +61,14 @@ MARKDOWN,
      */
     public function shouldProcess(string $block, bool $expected): void
     {
-        $actual = (new DocsLinkProcess(new CachingUrlFetcher()))->shouldProcess($block);
+        $actual = $this->process->shouldProcess($block);
         self::assertSame($expected, $actual);
     }
 
     /** @test */
     public function itCanBuildDocsLinkBlocks(): void
     {
-        $actual   = (new DocsLinkProcess(new CachingUrlFetcher()))->processBlockQuote(self::TEST_MARKDOWN);
+        $actual   = $this->process->processBlockQuote(self::TEST_MARKDOWN);
         $expected = '> #### PHP: Booleans - Manual 
 > https://www.php.net/manual/en/language.types.boolean.php';
         self::assertSame($expected, $actual);

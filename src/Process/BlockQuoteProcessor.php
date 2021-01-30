@@ -9,7 +9,7 @@ use LTS\MarkdownTools\ProcessorInterface;
 
 final class BlockQuoteProcessor implements ProcessorInterface
 {
-    # lifted from https://github.com/michelf/php-markdown/blob/6975244af21bd467235217813f3473bf3929a208/Michelf/Markdown.php#L1441
+    // lifted from https://github.com/michelf/php-markdown/blob/6975244af21bd467235217813f3473bf3929a208/Michelf/Markdown.php#L1441
     private const PHP_DOC_LINK_REGEXP = <<<'REGEXP'
 /
 (?<blockquote>			# Wrap whole match in $1
@@ -50,11 +50,11 @@ REGEXP;
 
     private function ensureEndsIn2LineBreaks(string $blockQuote): string
     {
-        if ("\n\n" === substr($blockQuote, -2)) {
+        if (substr($blockQuote, -2) === "\n\n") {
             return $blockQuote;
         }
 
-        return "$blockQuote\n\n";
+        return "{$blockQuote}\n\n";
     }
 
     private function processBlockQuote(string $blockQuote): string

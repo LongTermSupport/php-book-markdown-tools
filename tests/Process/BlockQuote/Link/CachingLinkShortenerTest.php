@@ -4,28 +4,27 @@ declare(strict_types=1);
 
 namespace LTS\MarkdownTools\Test\Process\BlockQuote\Link;
 
-use LTS\MarkdownTools\Cache;
 use LTS\MarkdownTools\Process\BlockQuote\Link\CachingLinkShortener;
 use LTS\MarkdownTools\Process\BlockQuote\Link\ShortenCallableInterface;
-use LTS\MarkdownTools\Test\Util;
+use LTS\MarkdownTools\Test\TestHelper;
 use PHPUnit\Framework\TestCase;
 
 /**
  * @internal
- * @covers \LTS\MarkdownTools\Process\BlockQuote\Link\CachingLinkShortener
  * @covers \LTS\MarkdownTools\Cache
+ * @covers \LTS\MarkdownTools\Process\BlockQuote\Link\CachingLinkShortener
+ *
+ * @small
  */
-class CachingLinkShortenerTest extends TestCase
+final class CachingLinkShortenerTest extends TestCase
 {
-    private Cache                    $cache;
     private ShortenCallableInterface $callable;
     private CachingLinkShortener     $shortener;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->cache     = new Cache(Util::CACHE_PATH);
-        $this->callable  = new class implements ShortenCallableInterface {
+        $this->callable           = new class() implements ShortenCallableInterface {
             public string  $short = 'shortened';
             public ?string $long;
 
@@ -34,12 +33,13 @@ class CachingLinkShortenerTest extends TestCase
                 return $this->short;
             }
         };
-        $this->shortener = new CachingLinkShortener($this->callable);
+        $this->shortener = new CachingLinkShortener($this->callable, TestHelper::getCache());
     }
 
     /** @test */
     public function itCanSetAndGetCache(): void
     {
+        /** @phpstan-ignore-next-line */
         $expected = $this->callable->short;
         $actual   = $this->shortener->getShortUrl('foobar');
         self::assertSame($expected, $actual);

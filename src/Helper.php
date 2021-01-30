@@ -6,7 +6,7 @@ namespace LTS\MarkdownTools;
 
 use RuntimeException;
 
-class Helper
+final class Helper
 {
     public static function resolveRelativePath(string $relativePath): string
     {

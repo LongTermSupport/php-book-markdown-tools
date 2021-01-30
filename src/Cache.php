@@ -10,15 +10,13 @@ final class Cache
 
     public function __construct(string $cacheDir = null)
     {
-        $this->cacheDir = $cacheDir ?? __DIR__ . '/../var/cache';
-        if (!is_dir($this->cacheDir)) {
-            \Safe\mkdir(pathname: $this->cacheDir, recursive: true);
-        }
+        $this->cacheDir = "{$cacheDir}/" ?? __DIR__ . '/../var/cache/';
+        $this->assertCacheDirExists();
     }
 
-    public function getCache(string $item): ?string
+    public function getCache(string $prefix, string $item): ?string
     {
-        $cachePath = $this->getCachePath($item);
+        $cachePath = $this->getCachePath($prefix, $item);
         if (file_exists($cachePath)) {
             $contents = \Safe\file_get_contents($cachePath);
             if ($contents !== '') {
@@ -29,19 +27,31 @@ final class Cache
         return null;
     }
 
-    public function setCache(string $item, string $contents): void
+    public function setCache(string $prefix, string $item, string $contents): void
     {
-        $cachePath = $this->getCachePath($item);
+        $cachePath = $this->getCachePath($prefix, $item);
         \Safe\file_put_contents(filename: $cachePath, data: $contents);
     }
 
-    private function getCachePath(string $item): string
+    private function assertCacheDirExists(): void
     {
-        $filename = preg_replace('%\W%', '_', $item);
-        if (strlen($filename) > 30) {
-            $filename = \Safe\substr($filename, 0, 10) . md5($item);
+        if (!is_dir($this->cacheDir)) {
+            \Safe\mkdir(pathname: $this->cacheDir, recursive: true);
         }
+    }
 
-        return $this->cacheDir . $filename;
+    private function getCachePath(string $prefix, string $item): string
+    {
+        $this->assertCacheDirExists();
+        /** @var string $prefix */
+        $prefix = \Safe\preg_replace('%\W%', '_', $prefix);
+        /** @var string $suffix */
+        $suffix = \Safe\preg_replace('%\W%', '_', $item);
+        if (strlen($suffix) > 100) {
+            $suffix = \Safe\substr($suffix, 0, 100) . md5($item);
+        }
+        $cacheFileName = "{$prefix}|{$suffix}.cache";
+
+        return $this->cacheDir . '/' . $cacheFileName;
     }
 }

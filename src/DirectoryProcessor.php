@@ -6,6 +6,7 @@ namespace LTS\MarkdownTools;
 
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
+use RuntimeException;
 use SplFileInfo;
 
 final class DirectoryProcessor
@@ -31,10 +32,10 @@ final class DirectoryProcessor
     /** @return RecursiveIteratorIterator<RecursiveDirectoryIterator> */
     private function getIterator(RunConfig $config): RecursiveIteratorIterator
     {
-        if (false === is_dir($config->getPathToChapters())) {
-            throw new \RuntimeException(
-                $config->getPathToChapters() . ' is not a directory, config is invalid');
-
+        if (is_dir($config->getPathToChapters()) === false) {
+            throw new RuntimeException(
+                $config->getPathToChapters() . ' is not a directory, config is invalid'
+            );
         }
 
         return new RecursiveIteratorIterator(

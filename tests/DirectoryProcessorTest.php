@@ -16,7 +16,7 @@ use PHPUnit\Framework\TestCase;
  */
 final class DirectoryProcessorTest extends TestCase
 {
-    public const TEST_DIR = Util::VAR_PATH . 'DirectoryProcessorTest';
+    public const TEST_DIR = TestHelper::VAR_PATH . 'DirectoryProcessorTest';
     public const EXPECTED = [
         '/DirectoryProcessorTest/Chapter4/file4.txt' => 'processed',
         '/DirectoryProcessorTest/Chapter1/file1.txt' => 'processed',
@@ -28,15 +28,15 @@ final class DirectoryProcessorTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        Util::nuke();
-        Util::createVarDir(self::TEST_DIR);
+        TestHelper::nuke();
+        TestHelper::createVarDir(self::TEST_DIR);
     }
 
     /** @test */
     public function itCanProcessADirectory(): void
     {
         foreach (range(1, 5) as $i) {
-            Util::createTestFile(
+            TestHelper::createTestFile(
                 contents: 'contents' . $i,
                 filename: 'file' . $i . '.txt',
                 createInDir: self::TEST_DIR . '/Chapter' . $i
@@ -44,7 +44,7 @@ final class DirectoryProcessorTest extends TestCase
         }
         $config = new RunConfig(pathToChapters: self::TEST_DIR);
         self::getProcessor()->run($config);
-        $actual = Util::getFilesContents(self::TEST_DIR);
+        $actual = TestHelper::getFilesContents(self::TEST_DIR);
         self::assertSame(self::EXPECTED, $actual);
     }
 

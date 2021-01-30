@@ -21,13 +21,13 @@ final class FileProcessorTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        Util::nuke();
+        TestHelper::nuke();
     }
 
     /** @test */
     public function itCanProcessFiles(): void
     {
-        $filePath = Util::createTestFile('unprocessed');
+        $filePath = TestHelper::createTestFile('unprocessed');
         self::getProcessor()->processFile($filePath);
         self::assertSame(self::EXPECTED, \Safe\file_get_contents($filePath));
     }

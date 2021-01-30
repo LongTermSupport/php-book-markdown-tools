@@ -6,7 +6,7 @@ namespace LTS\MarkdownTools\Test\Process;
 
 use LTS\MarkdownTools\Process\BlockQuote\BlockQuoteProcess;
 use LTS\MarkdownTools\Process\BlockQuoteProcessor;
-use LTS\MarkdownTools\Test\Util;
+use LTS\MarkdownTools\Test\TestHelper;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -83,7 +83,7 @@ kjh kefruheuf asd ias9uwefdasf
 
 kjh askdjh kjh weriuh uiowher ujskkkjh kjhkjfd
 kjh aksjhdjhasd';
-        $actual    = $processor->getProcessedContents(self::TEST_CONTENT, Util::VAR_PATH);
+        $actual    = $processor->getProcessedContents(self::TEST_CONTENT, TestHelper::VAR_PATH);
         self::assertSame($expected, $actual);
     }
 }

@@ -12,7 +12,6 @@ final class LinkProcessor
 {
     public function __construct(private string $urlRegexp, private CachingUrlFetcher $urlFetcher)
     {
-
     }
 
     public function shouldProcess(string $blockquote): bool
@@ -42,7 +41,9 @@ final class LinkProcessor
     {
         $content     = $this->urlFetcher->getContents($url);
         $title       = $this->getTitle($content);
-        $urlMarkdown = ($linkShortener) ? $linkShortener->getShortenedLinkMarkDown($url) : $url;
+        $urlMarkdown = ($linkShortener instanceof LinkShortenerInterface)
+            ? $linkShortener->getShortenedLinkMarkDown($url)
+            : $url;
 
         return <<<MARKDOWN
 > #### {$title}

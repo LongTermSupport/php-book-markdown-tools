@@ -6,7 +6,7 @@ namespace LTS\MarkdownTools\Process\BlockQuote\Link;
 
 use LTS\MarkdownTools\Cache;
 
-class CachingLinkShortener
+final class CachingLinkShortener
 {
     private const CACHE_PREFIX = __CLASS__;
     private Cache $cache;
@@ -18,13 +18,16 @@ class CachingLinkShortener
 
     public function getShortUrl(string $longUrl): string
     {
-        return $this->cache->getCache(self::CACHE_PREFIX . $longUrl) ?? $this->shorten($longUrl);
+        return $this->cache->getCache(prefix: self::CACHE_PREFIX, item: $longUrl) ?? $this->shorten($longUrl);
     }
 
     private function shorten(string $longUrl): string
     {
         $shortener = $this->shortener;
 
-        return $shortener($longUrl);
+        $shortUrl = $shortener($longUrl);
+        $this->cache->setCache(prefix: self::CACHE_PREFIX, item: $longUrl, contents: $shortUrl);
+
+        return $shortUrl;
     }
 }

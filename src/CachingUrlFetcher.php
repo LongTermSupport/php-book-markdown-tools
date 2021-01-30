@@ -4,24 +4,25 @@ declare(strict_types=1);
 
 namespace LTS\MarkdownTools;
 
-class CachingUrlFetcher
+final class CachingUrlFetcher
 {
     private const CACHE_PREFIX = __CLASS__;
+    private Cache $cache;
 
-    public function __construct(string $cacheDir = null)
+    public function __construct(?Cache $cache = null)
     {
-        $this->cache = new Cache($cacheDir);
+        $this->cache = $cache ?? new Cache();
     }
 
     public function getContents(string $url): string
     {
-        return $this->cache->getCache(self::CACHE_PREFIX . $url) ?? $this->fetchUrl($url);
+        return $this->cache->getCache(prefix: self::CACHE_PREFIX, item: $url) ?? $this->fetchUrl($url);
     }
 
-    private function fetchUrl(string $url)
+    private function fetchUrl(string $url): string
     {
         $contents = \Safe\file_get_contents($url);
-        $this->cache->setCache(self::CACHE_PREFIX . $url, $contents);
+        $this->cache->setCache(prefix: self::CACHE_PREFIX, item: $url, contents: $contents);
 
         return $contents;
     }

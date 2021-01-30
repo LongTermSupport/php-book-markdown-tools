@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace LTS\MarkdownTools\Process\BlockQuote;
 
+use LTS\MarkdownTools\Cache;
 use LTS\MarkdownTools\CachingUrlFetcher;
 use LTS\MarkdownTools\Process\BlockQuote\Link\WikipediaLinkShortener;
 
@@ -32,12 +33,12 @@ REGEXP;
     public function __construct(
         private CachingUrlFetcher $urlFetcher,
         ?LinkProcessor $linkProcessor = null,
-        ?WikipediaLinkShortener $linkShortener = null
+        ?WikipediaLinkShortener $linkShortener = null,
+        ?Cache $cache = null
     ) {
         $this->linkProcessor = $linkProcessor ?? new LinkProcessor(self::URL_REGEXP, $this->urlFetcher);
-        $this->shortener     = $linkShortener ?? new WikipediaLinkShortener();
+        $this->shortener     = $linkShortener ?? new WikipediaLinkShortener($cache);
     }
-
 
     public function shouldProcess(string $blockquote): bool
     {
@@ -53,12 +54,12 @@ REGEXP;
 
     private function addHighlightedText(string $blockquote): string
     {
-        if (1 !== \Safe\preg_match(self::HIGHLIGHTED_TEXT_REGEXP, $blockquote, $matches)) {
+        if (\Safe\preg_match(self::HIGHLIGHTED_TEXT_REGEXP, $blockquote, $matches) !== 1) {
             return $blockquote;
         }
         $text    = urldecode($matches['HighlightedText']);
         $wrapped = wordwrap($text, width: 40, break: "\n> ", cut_long_words: false);
 
-        return "$blockquote\n> $wrapped";
+        return "{$blockquote}\n> {$wrapped}";
     }
 }
