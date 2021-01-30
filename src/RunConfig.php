@@ -8,11 +8,11 @@ final class RunConfig
 {
     public function __construct(
         private string $pathToChapters,
-        private string $cachePath
+        private ?string $cachePath = null
     ) {
     }
 
-    public function getCachePath(): string
+    public function getCachePath(): ?string
     {
         return $this->cachePath;
     }

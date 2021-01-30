@@ -42,7 +42,7 @@ final class DirectoryProcessorTest extends TestCase
                 createInDir: self::TEST_DIR . '/Chapter' . $i
             );
         }
-        $config = new RunConfig(self::TEST_DIR);
+        $config = new RunConfig(pathToChapters: self::TEST_DIR);
         self::getProcessor()->run($config);
         $actual = Util::getFilesContents(self::TEST_DIR);
         self::assertSame(self::EXPECTED, $actual);

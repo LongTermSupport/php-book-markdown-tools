@@ -2,11 +2,8 @@
 
 lkjhb lkALSKJH KJAHSD KJASD
 
-> PHP: Autoloading Classes - Manual 
+> #### PHP: Autoloading Classes - Manual 
 > https://www.php.net/manual/en/language.oop5.autoload.php
->  * Autoloading Classes
->   * See Also
-
 
 asdasd asd 
 

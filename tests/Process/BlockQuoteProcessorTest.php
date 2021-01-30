@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @internal
- * @coversNothing
+ * @covers \LTS\MarkdownTools\Process\BlockQuoteProcessor
  *
  * @small
  */

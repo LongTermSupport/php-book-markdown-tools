@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace LTS\MarkdownTools\Test\Process\BlockQuote;
 
+use LTS\MarkdownTools\CachingUrlFetcher;
 use LTS\MarkdownTools\Process\BlockQuote\DocsLinkProcess;
 use PHPUnit\Framework\TestCase;
 
 /**
  * @internal
- * @coversNothing
+ * @covers \LTS\MarkdownTools\Process\BlockQuote\WikipediaLinkProcess
+ * @covers \LTS\MarkdownTools\Process\BlockQuote\LinkProcessor
  *
  * @small
  */
@@ -35,11 +37,7 @@ MARKDOWN,
                 false,
             ],
             [
-                <<<'MARKDOWN'
-> kjasdkjhaskjdh akhd askdhjasd
-> https://www.php.net/manual/en/language.types.boolean.php
-> kjha skdjh akjhdadasdasd
-MARKDOWN,
+                self::TEST_MARKDOWN,
                 true,
             ],
             [
@@ -55,20 +53,16 @@ MARKDOWN,
      */
     public function shouldProcess(string $block, bool $expected): void
     {
-        $actual = (new DocsLinkProcess())->shouldProcess($block);
+        $actual = (new DocsLinkProcess(new CachingUrlFetcher()))->shouldProcess($block);
         self::assertSame($expected, $actual);
     }
 
     /** @test */
     public function itCanBuildDocsLinkBlocks(): void
     {
-        $actual   = (new DocsLinkProcess())->processBlockQuote(self::TEST_MARKDOWN);
-        $expected = '> PHP: Booleans - Manual 
-> https://www.php.net/manual/en/language.types.boolean.php
->  * Booleans
->   * Syntax
->   * Converting to boolean
-';
+        $actual   = (new DocsLinkProcess(new CachingUrlFetcher()))->processBlockQuote(self::TEST_MARKDOWN);
+        $expected = '> #### PHP: Booleans - Manual 
+> https://www.php.net/manual/en/language.types.boolean.php';
         self::assertSame($expected, $actual);
     }
 }

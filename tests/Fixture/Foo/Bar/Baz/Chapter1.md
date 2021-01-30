@@ -2,6 +2,7 @@
 
 lkjhb lkALSKJH KJAHSD KJASD
 
+> #### PHP: Autoloading Classes - Manual 
 > https://www.php.net/manual/en/language.oop5.autoload.php
 
 asdasd asd 
@@ -12,8 +13,13 @@ asdasd asd
 [Code Snippet](./../../Bing/Bang/Bong/Blah.php)
 
 ```php
-kjhasdkjh kjhaskdjjkasd
+<?php
+
+declare(strict_types=1);
+
+$foo = 'boo';
 ```
+
 
 kjha skjdh kjhaskdjh 
 kjhaskdjh kjas kdjh asd
@@ -22,7 +28,19 @@ kljhkljasd kjh kajsd
 [Code Snippet](./../../Bing/Bang/Bong/Boo.php)
 
 ```php
-kj kjewr kjh hjkwer
+<?php
+
+declare(strict_types=1);
+
+echo "This, that, the other";
+
+?>
+
+OUTPUT:
+
+This, that, the other
+
 ```
+
 
 kjh weiurh iuuihjksadhj hasd

@@ -12,7 +12,8 @@ use RuntimeException;
 
 final class Util
 {
-    public const VAR_PATH = __DIR__ . '/../var/tests/';
+    public const VAR_PATH   = __DIR__ . '/../var/tests/';
+    public const CACHE_PATH = self::VAR_PATH . '/cache';
 
     public static function nuke(): void
     {
@@ -44,9 +45,9 @@ final class Util
     }
 
     /**
+     * @return array<string,string>
      * @throws \Safe\Exceptions\FilesystemException
      *
-     * @return array<string,string>
      */
     public static function getFilesContents(string $dir): array
     {
@@ -64,7 +65,6 @@ final class Util
 
         return $return;
     }
-
 
 
     private static function assertDirInVarDir(string $dir): void
