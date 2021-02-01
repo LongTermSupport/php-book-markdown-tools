@@ -1,0 +1,37 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+use LTS\MarkdownTools\DirectoryProcessor;
+use LTS\MarkdownTools\Factory;
+use LTS\MarkdownTools\FileProcessor;
+use LTS\MarkdownTools\Process\BlockQuote\DocsLinkProcess;
+use LTS\MarkdownTools\Process\BlockQuoteProcessor;
+use LTS\MarkdownTools\Process\RunnableCodeSnippetProcess;
+use LTS\MarkdownTools\RunConfig;
+
+set_error_handler(static function (int $errNo, string $errMsg, string $file, int $line) {
+    throw new \ErrorException("\n\n$errMsg\n\n", $errNo, 1, $file, $line);
+});
+require __DIR__ . '/../vendor/autoload.php';
+
+if ($argc < 2 || $argc > 3) {
+    echo "
+    
+    USAGE:
+    
+    {$argv[0]} 'path-to-chapters' ('optional - path-to-cache-dir')
+     
+    ";
+    exit(1);
+}
+$pathToCacheDir = null;
+match ($argc) {
+    2 => [, $pathToChapters] = $argv,
+    3 => [, $pathToChapters, $pathToCacheDir] = $argv
+};
+
+$config = new RunConfig($pathToChapters, $pathToCacheDir);
+Factory::create($config)->run($config);
+

@@ -1,5 +1,6 @@
 .idea
 /vendor/
-bin/
+bin/*
+!bin/processMarkdown
 var/
 .phpunit.result.cache
