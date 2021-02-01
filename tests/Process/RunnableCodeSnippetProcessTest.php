@@ -54,8 +54,7 @@ MARKDOWN;
 
 ```php
 ' . self::TEST_CODE . '
-```
-';
+```';
         self::assertSame($expected, $actual);
     }
 
@@ -91,8 +90,7 @@ OUTPUT:
 
 And new we add some stuff3
 
-```
-';
+```';
         self::assertSame($expected, $actual);
     }
 }

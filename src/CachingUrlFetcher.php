@@ -26,4 +26,9 @@ final class CachingUrlFetcher
 
         return $contents;
     }
+
+    private function ensureEncode(string $fragment): string
+    {
+        return urlencode(urldecode($fragment));
+    }
 }

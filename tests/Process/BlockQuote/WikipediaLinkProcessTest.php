@@ -29,6 +29,11 @@ MARKDOWN;
 > https://en.wikipedia.org/w/index.php?title=Data_type
 > kjhasdkj kajsd
 MARKDOWN;
+
+    public const TEST_MARKDOWN_WITH_PARENTHESES = <<<'MARKDOWN'
+> https://en.wikipedia.org/w/index.php?title=Covariance_and_contravariance_(computer_science)&oldid=1001839343#:~:text=In%20the%20O
+MARKDOWN;
+
     private WikipediaLinkProcess $process;
 
     public function setUp(): void
@@ -102,6 +107,16 @@ MARKDOWN,
 > is an attribute of data which tells the
 > compiler or interpreter how the
 > programmer intends to use the data.)';
+        self::assertSame($expected, $actual);
+    }
+
+    /** @test */
+    public function itCanHandleParentheses(): void
+    {
+        $actual   = $this->process->processBlockQuote(self::TEST_MARKDOWN_WITH_PARENTHESES);
+        $expected = '> #### Covariance and contravariance (computer science) - Wikipedia
+> [https://w.wiki/xGg](https://en.wikipedia.org/w/index.php?title=Covariance_and_contravariance_(computer_science)&oldid=1001839343#:~:text=In%20the%20O)
+> In the O)';
         self::assertSame($expected, $actual);
     }
 }

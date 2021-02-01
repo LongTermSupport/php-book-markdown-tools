@@ -30,7 +30,7 @@ REGEXP;
             $code             = \Safe\file_get_contents($codeRealPath);
             $codeOutput       = $this->runCodeAndGetOutput($code, $codeRealPath);
             $fullFind         = $match;
-            $fullReplace      = "[Code Snippet]({$codeRelativePath})\n\n```php\n{$code}\n{$codeOutput}```\n";
+            $fullReplace      = "[Code Snippet]({$codeRelativePath})\n\n```php\n{$code}\n{$codeOutput}```";
             $currentContents  = str_replace($fullFind, $fullReplace, $currentContents);
         }
 

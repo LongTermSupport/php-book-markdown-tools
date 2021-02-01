@@ -23,7 +23,6 @@ $foo = 'boo';
 
 ```
 
-
 kjha skjdh kjhaskdjh 
 kjhaskdjh kjas kdjh asd
 kljhkljasd kjh kajsd
@@ -47,6 +46,5 @@ OUTPUT:
 This, that, the other
 
 ```
-
 
 kjh weiurh iuuihjksadhj hasd
