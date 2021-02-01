@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * This test simulates teh full system being run.
- * We run it multiple times to ensure that the system is idempotent
+ * We run it multiple times to ensure that the system is idempotent.
  *
  * @internal
  * @coversNothing
@@ -33,7 +33,7 @@ final class IntegrationTest extends TestCase
         );
         $config    = new RunConfig(self::TEST_CHAPTERS_DIR, TestHelper::CACHE_PATH);
         $processor = Factory::create($config);
-        for ($i = 0; $i < self::TIMES_TO_RUN; $i++) {
+        for ($i = 0; $i < self::TIMES_TO_RUN; ++$i) {
             $processor->run($config);
             self::assertFileEquals(
                 expected: self::EXPECTED_CHAPTER1_PATH,

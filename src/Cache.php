@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace LTS\MarkdownTools;
 
+use RuntimeException;
+
 final class Cache
 {
-    private string $cacheDir;
     public const MIN_CACHE_DIR_PATH_LENGTH = 10;
+    private string $cacheDir;
 
     public function __construct(string $cacheDir = null)
     {
@@ -38,12 +40,12 @@ final class Cache
     private function assertCacheDirExists(): void
     {
         if (strlen($this->cacheDir) < self::MIN_CACHE_DIR_PATH_LENGTH) {
-            throw new \RuntimeException('CacheDir is very short and seems incorect: ' . $this->cacheDir);
+            throw new RuntimeException('CacheDir is very short and seems incorect: ' . $this->cacheDir);
         }
         if (!is_dir($this->cacheDir)) {
             \Safe\mkdir(pathname: $this->cacheDir, recursive: true);
         }
-        $this->cacheDir=\Safe\realpath($this->cacheDir).'/';
+        $this->cacheDir=\Safe\realpath($this->cacheDir) . '/';
     }
 
     private function getCachePath(string $prefix, string $item): string
