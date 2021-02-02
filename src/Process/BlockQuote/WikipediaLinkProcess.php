@@ -11,7 +11,7 @@ use LTS\MarkdownTools\Process\BlockQuote\Link\WikipediaLinkShortener;
 final class WikipediaLinkProcess implements BlockQuoteProcess
 {
     private const URL_REGEXP = <<<'REGEXP'
-%https://en.wikipedia.org/.+%
+%(?<=\()?https://en.wikipedia.org/.+(?=\))?%
 REGEXP;
 
     /**
@@ -24,7 +24,7 @@ REGEXP;
      * the version you want to link to.
      */
     private const HIGHLIGHTED_TEXT_REGEXP = <<<'REGEXP'
-%https://en\.wikipedia\.org/w/index\.php\?title=(?<Title>[^&]+?)&oldid=(?<OldId>\d+?)#:~:text=(?<HighlightedText>.+)%
+%(?<=\()?https://en\.wikipedia\.org/w/index\.php\?title=(?<Title>[^&]+?)&oldid=(?<OldId>\d+?)#:~:text=(?<HighlightedText>.+)(?=\))?%
 REGEXP;
 
     private LinkProcessor          $linkProcessor;
