@@ -70,10 +70,10 @@ REGEXP;
     {
         [$exitCode, $output] = $this->runCode($codeRealPath);
         if ($exitCode !== 0) {
-            throw new RuntimeException("Unexpected error running snippet:\n{$output}");
+            throw new RuntimeException("Unexpected error running snippet:\n{$codeRealPath}\n\n{$output}");
         }
         if ('' === $output) {
-            throw new RuntimeException("No output running snippet:\n{$output}");
+            throw new RuntimeException("No output running snippet:\n{$codeRealPath}");
         }
 
         return $this->formatOutput($output);
@@ -83,10 +83,10 @@ REGEXP;
     {
         [$exitCode, $output] = $this->runCode($codeRealPath);
         if ($exitCode === 0) {
-            throw new RuntimeException("No expected error running snippet:\n{$output}");
+            throw new RuntimeException("No expected error running snippet:\n{$codeRealPath}\n\n{$output}");
         }
         if ('' === $output) {
-            throw new RuntimeException("No expected error output running snippet:\n{$output}");
+            throw new RuntimeException("No expected error output running snippet:\n{$codeRealPath}");
         }
 
         return $this->formatOutput($output);
