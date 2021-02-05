@@ -42,6 +42,16 @@ some previous contents here
 ```
 MARKDOWN;
 
+    public const MARKDOWN_EXECUTABLE_SNIPPET = <<<'MARKDOWN'
+# some content blah
+
+[Code Executable Snippet](%s)
+
+```php
+some previous contents here
+```
+MARKDOWN;
+
     /** @test */
     public function itCanGetCodeSnippets(): void
     {
@@ -67,11 +77,11 @@ MARKDOWN;
     public function itCanGetAndRunCodeSnippets(): void
     {
         TestHelper::createTestFile(contents: self::TEST_CODE_RUNNABLE, filename: __FUNCTION__ . '.php');
-        $mdContents = \Safe\sprintf(self::MARKDOWN_SNIPPET, './' . __FUNCTION__ . '.php');
+        $mdContents = \Safe\sprintf(self::MARKDOWN_EXECUTABLE_SNIPPET, './' . __FUNCTION__ . '.php');
         $actual     = self::getProcessor()->getProcessedContents($mdContents, TestHelper::VAR_PATH);
         $expected   = '# some content blah
 
-[Code Snippet](./itCanGetAndRunCodeSnippets.php)
+[Code Executable Snippet](./itCanGetAndRunCodeSnippets.php)
 
 ```php
 <?php 

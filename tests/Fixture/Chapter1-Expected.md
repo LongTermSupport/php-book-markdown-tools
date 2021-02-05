@@ -27,7 +27,7 @@ kjha skjdh kjhaskdjh
 kjhaskdjh kjas kdjh asd
 kljhkljasd kjh kajsd
 
-[Code Snippet](./../../Bing/Bang/Bong/Boo.php)
+[Code Executable Snippet](./../../Bing/Bang/Bong/Boo.php)
 
 ```php
 <?php
