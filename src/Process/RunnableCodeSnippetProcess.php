@@ -27,7 +27,7 @@ final class RunnableCodeSnippetProcess implements ProcessorInterface
     private const ERROR_TYPE = 'Code Error Snippet';
 
     private const FIND_SNIPPETS_REGEX = <<<REGEXP
-%^\\[(?<snippet_type>Code.+?Snippet)]\\((?<file_path>[^)]+?)\\)[^`]+?```php\n(?<snippet>[^`]*?)\n```%sm
+%^\\[(?<snippet_type>Code[^\[]+Snippet)]\\((?<file_path>[^)]+?)\\)[^`]+?```php\n(?<snippet>[^`]*?)\n```%sm
 REGEXP;
 
     public function getProcessedContents(string $currentContents, string $currentFileDir): string
@@ -44,7 +44,9 @@ REGEXP;
             $codeOutput       = match ($snippetType) {
                 self::STANDARD_TYPE => '',
                 self::EXECUTABLE_TYPE => $this->getOutput($codeRealPath),
-                self::ERROR_TYPE => $this->getErrorOutput($codeRealPath)
+                self::ERROR_TYPE => $this->getErrorOutput($codeRealPath),
+                default => throw new \RuntimeException('Got invalid snippet type: ' . $snippetType)
+
             };
             $fullFind         = $match;
             $fullReplace      = "[$snippetType]({$codeRelativePath})\n\n```php\n{$code}\n{$codeOutput}```";
