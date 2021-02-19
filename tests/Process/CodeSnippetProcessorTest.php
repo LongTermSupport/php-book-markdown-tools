@@ -4,17 +4,21 @@ declare(strict_types=1);
 
 namespace LTS\MarkdownTools\Test\Process;
 
-use LTS\MarkdownTools\Process\RunnableCodeSnippetProcess;
+use LTS\MarkdownTools\CachingUrlFetcher;
+use LTS\MarkdownTools\Process\BlockQuote\GithubLinkProcess;
+use LTS\MarkdownTools\Process\CodeSnippet\GithubCodeSnippetProcess;
+use LTS\MarkdownTools\Process\CodeSnippet\LocalCodeSnippetProcess;
+use LTS\MarkdownTools\Process\CodeSnippetProcessor;
 use LTS\MarkdownTools\Test\TestHelper;
 use PHPUnit\Framework\TestCase;
 
 /**
  * @internal
- * @covers \LTS\MarkdownTools\Process\RunnableCodeSnippetProcess
+ * @covers \LTS\MarkdownTools\Process\CodeSnippetProcessor
  *
  * @small
  */
-final class RunnableCodeSnippetProcessTest extends TestCase
+final class CodeSnippetProcessorTest extends TestCase
 {
     public const TEST_CODE = <<<'CODE'
 <?php 
@@ -68,9 +72,12 @@ MARKDOWN;
         self::assertSame($expected, $actual);
     }
 
-    public static function getProcessor(): RunnableCodeSnippetProcess
+    public static function getProcessor(): CodeSnippetProcessor
     {
-        return new RunnableCodeSnippetProcess();
+        return new CodeSnippetProcessor(
+            new LocalCodeSnippetProcess(),
+            new GithubCodeSnippetProcess(new CachingUrlFetcher())
+        );
     }
 
     /** @test */

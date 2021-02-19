@@ -12,18 +12,17 @@ final class LinkProcessor
 {
     /**
      * @var string Match but don't include a leading ( if set
-     * Includes the opening regex delim %
+     *             Includes the opening regex delim %
      */
     public const REGEX_LINK_LOOKBEHIND = '%(?<=\()';
     /**
      * @var string Match but don't include a trailing ) if set
-     * Includes teh closing regex delim %
+     *             Includes teh closing regex delim %
      */
     public const REGEX_LINK_LOOKAHEAD = '(?=\))%';
 
     public function __construct(private string $urlRegexp, private CachingUrlFetcher $urlFetcher)
     {
-
     }
 
     public function shouldProcess(string $blockquote): bool
@@ -54,7 +53,7 @@ final class LinkProcessor
             : $url;
 
         return <<<MARKDOWN
-> #### {$title}
+> ###### {$title}
 > {$urlMarkdown}
 MARKDOWN;
     }
@@ -83,10 +82,9 @@ MARKDOWN;
     {
         $trimmedRegexp = trim($this->urlRegexp, '%');
         if ($trimmedRegexp === $this->urlRegexp) {
-            throw new \RuntimeException('Invalid delimiters used for regexp, you must use % delim');
+            throw new RuntimeException('Invalid delimiters used for regexp, you must use % delim');
         }
 
         return self::REGEX_LINK_LOOKBEHIND . $trimmedRegexp . self::REGEX_LINK_LOOKAHEAD;
-
     }
 }

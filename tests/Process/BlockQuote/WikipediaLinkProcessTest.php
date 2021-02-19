@@ -91,7 +91,7 @@ MARKDOWN,
     public function itCanBuildDocsLinkBlocks(): void
     {
         $actual   = $this->process->processBlockQuote(self::TEST_MARKDOWN_NO_HIGHLIGHT);
-        $expected = '> #### Data type - Wikipedia
+        $expected = '> ###### Data type - Wikipedia
 > [https://w.wiki/wor](https://en.wikipedia.org/w/index.php?title=Data_type)';
         self::assertSame($expected, $actual);
     }
@@ -100,7 +100,7 @@ MARKDOWN,
     public function itCanBuildDocsLinkBlocksWithTextHighlight(): void
     {
         $actual   = $this->process->processBlockQuote(self::TEST_MARKDOWN);
-        $expected = '> #### Data type - Wikipedia
+        $expected = '> ###### Data type - Wikipedia
 > [https://w.wiki/wow](https://en.wikipedia.org/w/index.php?title=Data_type&oldid=996603474#:~:text=In%20computer%20science%20and%20computer%20programming,%20a%20data%20type%20or%20simply%20type%20is%20an%20attribute%20of%20data%20which%20tells%20the%20compiler%20or%20interpreter%20how%20the%20programmer%20intends%20to%20use%20the%20data.)
 > In computer science and computer
 > programming, a data type or simply type
@@ -114,7 +114,7 @@ MARKDOWN,
     public function itCanHandleParentheses(): void
     {
         $actual   = $this->process->processBlockQuote(self::TEST_MARKDOWN_WITH_PARENTHESES);
-        $expected = '> #### Covariance and contravariance (computer science) - Wikipedia
+        $expected = '> ###### Covariance and contravariance (computer science) - Wikipedia
 > [https://w.wiki/xGg](https://en.wikipedia.org/w/index.php?title=Covariance_and_contravariance_(computer_science)&oldid=1001839343#:~:text=In%20the%20O)
 > In the O)';
         self::assertSame($expected, $actual);

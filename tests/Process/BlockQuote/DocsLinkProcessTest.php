@@ -69,7 +69,7 @@ MARKDOWN,
     public function itCanBuildDocsLinkBlocks(): void
     {
         $actual   = $this->process->processBlockQuote(self::TEST_MARKDOWN);
-        $expected = '> #### PHP: Booleans - Manual 
+        $expected = '> ###### PHP: Booleans - Manual 
 > https://www.php.net/manual/en/language.types.boolean.php';
         self::assertSame($expected, $actual);
     }
