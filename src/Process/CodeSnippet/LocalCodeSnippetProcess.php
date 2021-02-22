@@ -44,7 +44,7 @@ final class LocalCodeSnippetProcess implements CodeSnippetProcessInterface
 
     public function shouldProcess(string $filePath): bool
     {
-        return str_starts_with(haystack: $filePath, needle: './');
+        return str_starts_with(haystack: $filePath, needle: '.');
     }
 
     private function getCodeRealPath(string $currentFileDir, string $codeRelativePath): string
