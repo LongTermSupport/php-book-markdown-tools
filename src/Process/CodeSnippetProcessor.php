@@ -11,7 +11,7 @@ use RuntimeException;
 final class CodeSnippetProcessor implements ProcessorInterface
 {
     private const FIND_SNIPPETS_REGEX = <<<REGEXP
-%^\\[(?<snippet_type>Code[^\\[]+Snippet)]\\((?<file_path>[^)]+?)\\)[^`]+?```php\n(?<snippet>[^`]*?)\n```%sm
+%^\\[(?<snippet_type>Code[^\\[]+Snippet)]\\((?<file_path>[^)]+?)\\)[^`]+?```php\n(?<snippet>.*?)\n```%sm
 REGEXP;
     /** @var CodeSnippetProcessInterface[] */
     private array $processInterfaces;
