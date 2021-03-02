@@ -52,9 +52,9 @@ final class TestHelper
     }
 
     /**
+     * @return array<string,string>
      * @throws \Safe\Exceptions\FilesystemException
      *
-     * @return array<string,string>
      */
     public static function getFilesContents(string $dir): array
     {

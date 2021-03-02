@@ -1,19 +1,12 @@
 #!/usr/bin/env node
 const yargs = require('yargs/yargs')
 const {hideBin} = require('yargs/helpers')
-const argv = yargs(hideBin(process.argv)).argv
-// const Prism = require('prismjs');
-// require('prismjs/components/prism-markup-templating');
-// require('prismjs/components/prism-php');
-// require('prismjs/components/prism-javadoclike')
-// require('prismjs/components/prism-phpdoc');
-// require('prismjs/components/prism-php-extras');
-// require('prismjs/plugins/line-numbers/prism-line-numbers');
-// require('prismjs/plugins/match-braces/prism-match-braces');
-
 const fs = require('fs');
 const puppeteer = require('puppeteer')
 const varPath = __dirname
+const argv = yargs(hideBin(process.argv)).argv
+const codeFilePath = argv.path
+const codeFileLang = argv.lang
 
 function escape(rawCode) {
     return String(rawCode)
@@ -27,7 +20,7 @@ function escape(rawCode) {
 
 
 function readFile() {
-    const codeFilePath = argv.path
+
     if (codeFilePath.length < 1) {
         throw 'No file path set'
     }
@@ -42,7 +35,9 @@ function readFile() {
 
 const codeContent = escape(readFile());
 codeHtml = fs.readFileSync(__dirname + '/codeTemplate.html', 'utf8')
-codeHtml = codeHtml.replace('<code></code>', '<code>' + codeContent + '</code>')
+codeHtml = codeHtml
+    .replace('<code></code>', '<code>' + codeContent + '</code>')
+    .replace('language-php', 'language-' + codeFileLang)
 const htmlPath = varPath + '/highlighted-code.html'
 fs.writeFileSync(htmlPath, codeHtml);
 
@@ -51,7 +46,7 @@ fs.writeFileSync(htmlPath, codeHtml);
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
     await page.setViewport({
-        height: 100,
+        height: 1,
         width: 600,
         deviceScaleFactor: 1
     });
