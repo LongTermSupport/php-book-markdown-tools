@@ -1,0 +1,14 @@
+{
+  "name": "php-book-markdown-tools",
+  "version": "1.0.0",
+  "description": "JS tooling to assist with book authorship",
+  "main": "index.js",
+  "repository": "https://github.com/LongTermSupport/php-book-markdown-tools",
+  "author": "Joseph Edmonds",
+  "license": "MIT",
+  "dependencies": {
+    "prismjs": "^1.23.0",
+    "puppeteer": "^8.0.0",
+    "yargs": "^16.2.0"
+  }
+}
