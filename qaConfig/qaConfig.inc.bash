@@ -1,2 +1,2 @@
-export infectionMutationScoreIndicator=44
-export infectionCoveredCodeMSI=75
+export infectionMutationScoreIndicator=31
+export infectionCoveredCodeMSI=73

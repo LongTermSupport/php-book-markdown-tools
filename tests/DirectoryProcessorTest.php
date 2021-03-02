@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace LTS\MarkdownTools\Test;
 
 use LTS\MarkdownTools\DirectoryProcessor;
-use LTS\MarkdownTools\RunConfig;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -42,7 +41,7 @@ final class DirectoryProcessorTest extends TestCase
                 createInDir: self::TEST_DIR . '/Chapter' . $i
             );
         }
-        $config = new RunConfig(pathToChapters: self::TEST_DIR);
+        $config = new \LTS\MarkdownTools\RunConfig(pathToChapters: self::TEST_DIR);
         self::getProcessor()->run($config);
         $actual = TestHelper::getFilesContents(self::TEST_DIR);
         self::assertSame(self::EXPECTED, $actual);

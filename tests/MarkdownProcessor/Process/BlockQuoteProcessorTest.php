@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace LTS\MarkdownTools\Test\Process;
+namespace LTS\MarkdownTools\Test\MarkdownProcessor\Process;
 
-use LTS\MarkdownTools\Process\BlockQuote\BlockQuoteProcess;
-use LTS\MarkdownTools\Process\BlockQuoteProcessor;
+use LTS\MarkdownTools\MarkdownProcessor\Process\BlockQuote\BlockQuoteProcess;
+use LTS\MarkdownTools\MarkdownProcessor\Process\BlockQuoteProcessor;
 use LTS\MarkdownTools\Test\TestHelper;
 use PHPUnit\Framework\TestCase;
 
 /**
  * @internal
- * @covers \LTS\MarkdownTools\Process\BlockQuoteProcessor
+ * @covers \LTS\MarkdownTools\MarkdownProcessor\Process\BlockQuoteProcessor
  *
  * @small
  */

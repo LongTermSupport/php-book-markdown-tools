@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace LTS\MarkdownTools\Test\Process\BlockQuote;
+namespace LTS\MarkdownTools\Test\MarkdownProcessor\Process\BlockQuote;
 
-use LTS\MarkdownTools\CachingUrlFetcher;
-use LTS\MarkdownTools\Process\BlockQuote\DocsLinkProcess;
+use LTS\MarkdownTools\MarkdownProcessor\CachingUrlFetcher;
+use LTS\MarkdownTools\MarkdownProcessor\Process\BlockQuote\DocsLinkProcess;
 use LTS\MarkdownTools\Test\TestHelper;
 use PHPUnit\Framework\TestCase;
 
 /**
  * @internal
- * @covers \LTS\MarkdownTools\Process\BlockQuote\LinkProcessor
- * @covers \LTS\MarkdownTools\Process\BlockQuote\WikipediaLinkProcess
+ * @covers \LTS\MarkdownTools\MarkdownProcessor\Process\BlockQuote\LinkProcessor
+ * @covers \LTS\MarkdownTools\MarkdownProcessor\Process\BlockQuote\WikipediaLinkProcess
  *
  * @small
  */

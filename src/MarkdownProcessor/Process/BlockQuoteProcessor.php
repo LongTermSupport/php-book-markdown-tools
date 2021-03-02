@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace LTS\MarkdownTools\Process;
+namespace LTS\MarkdownTools\MarkdownProcessor\Process;
 
-use LTS\MarkdownTools\Process\BlockQuote\BlockQuoteProcess;
+use LTS\MarkdownTools\MarkdownProcessor\Process\BlockQuote\BlockQuoteProcess;
 use LTS\MarkdownTools\ProcessorInterface;
 
 final class BlockQuoteProcessor implements ProcessorInterface

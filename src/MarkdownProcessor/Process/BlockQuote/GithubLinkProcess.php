@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace LTS\MarkdownTools\Process\BlockQuote;
+namespace LTS\MarkdownTools\MarkdownProcessor\Process\BlockQuote;
 
-use LTS\MarkdownTools\CachingUrlFetcher;
+use LTS\MarkdownTools\MarkdownProcessor\CachingUrlFetcher;
 
-final class DocsLinkProcess implements BlockQuoteProcess
+final class GithubLinkProcess implements BlockQuoteProcess
 {
     private const URL_REGEXP = <<<'REGEXP'
-%https://www.php.net/.+%
+%https://github.com/.+%
 REGEXP;
     private LinkProcessor $linkProcessor;
 

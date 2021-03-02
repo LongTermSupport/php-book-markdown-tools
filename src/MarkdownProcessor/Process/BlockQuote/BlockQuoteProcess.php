@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace LTS\MarkdownTools\Process\BlockQuote;
+namespace LTS\MarkdownTools\MarkdownProcessor\Process\BlockQuote;
 
 interface BlockQuoteProcess
 {

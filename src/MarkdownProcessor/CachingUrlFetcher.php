@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-namespace LTS\MarkdownTools;
+namespace LTS\MarkdownTools\MarkdownProcessor;
+
+use LTS\MarkdownTools\Cache;
 
 final class CachingUrlFetcher
 {
@@ -25,10 +27,5 @@ final class CachingUrlFetcher
         $this->cache->setCache(prefix: self::CACHE_PREFIX, item: $url, contents: $contents);
 
         return $contents;
-    }
-
-    private function ensureEncode(string $fragment): string
-    {
-        return urlencode(urldecode($fragment));
     }
 }

@@ -68,8 +68,6 @@ fs.writeFileSync(htmlPath, codeHtml);
     const imageBuffer = await page.screenshot({fullPage: true});
 
     await browser.close();
-
-// write file to disk as buffer
     await fs.writeFile(varPath + '/highlighted-code.png', imageBuffer, function (err) {
         if (err) throw err
     });

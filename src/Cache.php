@@ -45,7 +45,7 @@ final class Cache
         if (!is_dir($this->cacheDir)) {
             \Safe\mkdir(pathname: $this->cacheDir, recursive: true);
         }
-        $this->cacheDir=\Safe\realpath($this->cacheDir) . '/';
+        $this->cacheDir = \Safe\realpath($this->cacheDir) . '/';
     }
 
     private function getCachePath(string $prefix, string $item): string

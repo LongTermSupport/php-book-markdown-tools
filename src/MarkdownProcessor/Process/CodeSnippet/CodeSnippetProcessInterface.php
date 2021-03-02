@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace LTS\MarkdownTools\Process\CodeSnippet;
+namespace LTS\MarkdownTools\MarkdownProcessor\Process\CodeSnippet;
 
 interface CodeSnippetProcessInterface
 {

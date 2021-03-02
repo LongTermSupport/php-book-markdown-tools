@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace LTS\MarkdownTools\Test;
 
 use LTS\MarkdownTools\FileProcessor;
-use LTS\MarkdownTools\ProcessorInterface;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -34,7 +33,7 @@ final class FileProcessorTest extends TestCase
 
     public static function getProcessor(): FileProcessor
     {
-        return new FileProcessor(new class() implements ProcessorInterface {
+        return new FileProcessor(new class() implements \LTS\MarkdownTools\ProcessorInterface {
             public function getProcessedContents(string $currentContents, string $currentFileDir): string
             {
                 return FileProcessorTest::EXPECTED;

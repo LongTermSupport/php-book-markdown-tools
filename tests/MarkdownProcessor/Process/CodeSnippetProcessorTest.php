@@ -2,19 +2,18 @@
 
 declare(strict_types=1);
 
-namespace LTS\MarkdownTools\Test\Process;
+namespace LTS\MarkdownTools\Test\MarkdownProcessor\Process;
 
-use LTS\MarkdownTools\CachingUrlFetcher;
-use LTS\MarkdownTools\Process\BlockQuote\GithubLinkProcess;
-use LTS\MarkdownTools\Process\CodeSnippet\GithubCodeSnippetProcess;
-use LTS\MarkdownTools\Process\CodeSnippet\LocalCodeSnippetProcess;
-use LTS\MarkdownTools\Process\CodeSnippetProcessor;
+use LTS\MarkdownTools\MarkdownProcessor\CachingUrlFetcher;
+use LTS\MarkdownTools\MarkdownProcessor\Process\CodeSnippet\GithubCodeSnippetProcess;
+use LTS\MarkdownTools\MarkdownProcessor\Process\CodeSnippet\LocalCodeSnippetProcess;
+use LTS\MarkdownTools\MarkdownProcessor\Process\CodeSnippetProcessor;
 use LTS\MarkdownTools\Test\TestHelper;
 use PHPUnit\Framework\TestCase;
 
 /**
  * @internal
- * @covers \LTS\MarkdownTools\Process\CodeSnippetProcessor
+ * @covers \LTS\MarkdownTools\MarkdownProcessor\Process\CodeSnippetProcessor
  *
  * @small
  */

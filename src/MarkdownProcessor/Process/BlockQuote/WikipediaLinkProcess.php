@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace LTS\MarkdownTools\Process\BlockQuote;
+namespace LTS\MarkdownTools\MarkdownProcessor\Process\BlockQuote;
 
 use LTS\MarkdownTools\Cache;
-use LTS\MarkdownTools\CachingUrlFetcher;
-use LTS\MarkdownTools\Process\BlockQuote\Link\WikipediaLinkShortener;
+use LTS\MarkdownTools\MarkdownProcessor\CachingUrlFetcher;
+use LTS\MarkdownTools\MarkdownProcessor\Process\BlockQuote\Link\WikipediaLinkShortener;
 
 final class WikipediaLinkProcess implements BlockQuoteProcess
 {

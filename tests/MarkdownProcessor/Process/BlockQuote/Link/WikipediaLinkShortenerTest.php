@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace LTS\MarkdownTools\Test\Process\BlockQuote\Link;
+namespace LTS\MarkdownTools\Test\MarkdownProcessor\Process\BlockQuote\Link;
 
-use LTS\MarkdownTools\Process\BlockQuote\Link\WikipediaLinkShortener;
+use LTS\MarkdownTools\MarkdownProcessor\Process\BlockQuote\Link\WikipediaLinkShortener;
 use LTS\MarkdownTools\Test\TestHelper;
 use PHPUnit\Framework\TestCase;
 

@@ -12,8 +12,9 @@ use RecursiveIteratorIterator;
 
 final class TestHelper
 {
-    public const VAR_PATH   = __DIR__ . '/../var/tests/';
-    public const CACHE_PATH = __DIR__ . '/../var/tests-cache/';
+    public const FIXTURE_PATH = __DIR__ . '/Fixture/';
+    public const VAR_PATH     = __DIR__ . '/../var/tests/';
+    public const CACHE_PATH   = __DIR__ . '/../var/tests-cache/';
     private static Cache $cache;
 
     public static function nuke(): void

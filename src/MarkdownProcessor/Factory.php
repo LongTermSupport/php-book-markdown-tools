@@ -2,15 +2,19 @@
 
 declare(strict_types=1);
 
-namespace LTS\MarkdownTools;
+namespace LTS\MarkdownTools\MarkdownProcessor;
 
-use LTS\MarkdownTools\Process\BlockQuote\DocsLinkProcess;
-use LTS\MarkdownTools\Process\BlockQuote\GithubLinkProcess;
-use LTS\MarkdownTools\Process\BlockQuote\WikipediaLinkProcess;
-use LTS\MarkdownTools\Process\BlockQuoteProcessor;
-use LTS\MarkdownTools\Process\CodeSnippet\GithubCodeSnippetProcess;
-use LTS\MarkdownTools\Process\CodeSnippet\LocalCodeSnippetProcess;
-use LTS\MarkdownTools\Process\CodeSnippetProcessor;
+use LTS\MarkdownTools\Cache;
+use LTS\MarkdownTools\DirectoryProcessor;
+use LTS\MarkdownTools\FileProcessor;
+use LTS\MarkdownTools\MarkdownProcessor\Process\BlockQuote\DocsLinkProcess;
+use LTS\MarkdownTools\MarkdownProcessor\Process\BlockQuote\GithubLinkProcess;
+use LTS\MarkdownTools\MarkdownProcessor\Process\BlockQuote\WikipediaLinkProcess;
+use LTS\MarkdownTools\MarkdownProcessor\Process\BlockQuoteProcessor;
+use LTS\MarkdownTools\MarkdownProcessor\Process\CodeSnippet\GithubCodeSnippetProcess;
+use LTS\MarkdownTools\MarkdownProcessor\Process\CodeSnippet\LocalCodeSnippetProcess;
+use LTS\MarkdownTools\MarkdownProcessor\Process\CodeSnippetProcessor;
+use LTS\MarkdownTools\RunConfig;
 
 final class Factory
 {

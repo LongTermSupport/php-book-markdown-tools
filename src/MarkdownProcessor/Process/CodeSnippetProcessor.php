@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace LTS\MarkdownTools\Process;
+namespace LTS\MarkdownTools\MarkdownProcessor\Process;
 
-use LTS\MarkdownTools\Process\CodeSnippet\CodeSnippetProcessInterface;
+use LTS\MarkdownTools\MarkdownProcessor\Process\CodeSnippet\CodeSnippetProcessInterface;
 use LTS\MarkdownTools\ProcessorInterface;
 use RuntimeException;
 

@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace LTS\MarkdownTools\Test;
+namespace LTS\MarkdownTools\Test\MarkdownProcessor;
 
-use LTS\MarkdownTools\Factory;
+use LTS\MarkdownTools\MarkdownProcessor\Factory;
 use LTS\MarkdownTools\RunConfig;
+use LTS\MarkdownTools\Test\TestHelper;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -18,10 +19,10 @@ use PHPUnit\Framework\TestCase;
  */
 final class IntegrationTest extends TestCase
 {
-    private const TEST_CHAPTERS_DIR      = __DIR__ . '/Fixture/Foo/Bar/Baz/';
+    private const TEST_CHAPTERS_DIR      = TestHelper::FIXTURE_PATH . '/Foo/Bar/Baz/';
     private const TEST_CHAPTER1_PATH     = self::TEST_CHAPTERS_DIR . '/Chapter1.md';
-    private const EXPECTED_CHAPTER1_PATH = __DIR__ . '/Fixture/Chapter1-Expected.md';
-    private const SOURCE_CHAPTER1_PATH   = __DIR__ . '/Fixture/Chapter1-Source.md';
+    private const EXPECTED_CHAPTER1_PATH = TestHelper::FIXTURE_PATH . '/Chapter1-Expected.md';
+    private const SOURCE_CHAPTER1_PATH   = TestHelper::FIXTURE_PATH . '/Chapter1-Source.md';
     private const TIMES_TO_RUN           = 4;
 
     /** @test */

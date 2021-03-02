@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace LTS\MarkdownTools\Process\CodeSnippet;
+namespace LTS\MarkdownTools\MarkdownProcessor\Process\CodeSnippet;
 
-use LTS\MarkdownTools\CachingUrlFetcher;
+use LTS\MarkdownTools\MarkdownProcessor\CachingUrlFetcher;
 use RuntimeException;
 
 final class GithubCodeSnippetProcess implements CodeSnippetProcessInterface
