@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace LTS\MarkdownTools\Test\MarkdownProcessor\Process;
 
+use LTS\MarkdownTools\ConsoleOutputInterface;
 use LTS\MarkdownTools\MarkdownProcessor\CachingUrlFetcher;
 use LTS\MarkdownTools\MarkdownProcessor\Process\CodeSnippet\GithubCodeSnippetProcess;
 use LTS\MarkdownTools\MarkdownProcessor\Process\CodeSnippet\LocalCodeSnippetProcess;
@@ -74,6 +75,15 @@ MARKDOWN;
     public static function getProcessor(): CodeSnippetProcessor
     {
         return new CodeSnippetProcessor(
+            new class() implements ConsoleOutputInterface {
+                public function stdErr(string $message): void
+                {
+                }
+
+                public function stdOut(string $message): void
+                {
+                }
+            },
             new LocalCodeSnippetProcess(),
             new GithubCodeSnippetProcess(new CachingUrlFetcher())
         );
@@ -99,10 +109,10 @@ function add(int $a, int $b):int{
     return $a+$b;
 }echo "And new we add some stuff";
 echo add($foo, $bar);
+```
 
-?>
-
-OUTPUT:
+###### Output:
+```
 
 And new we add some stuff3
 

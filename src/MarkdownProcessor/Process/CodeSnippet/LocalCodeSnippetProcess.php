@@ -32,14 +32,16 @@ final class LocalCodeSnippetProcess implements CodeSnippetProcessInterface
             codeRelativePath: $codeRelativePath
         );
         $code         = \Safe\file_get_contents($codeRealPath);
-        $codeOutput   = match ($snippetType) {
-            self::STANDARD_TYPE   => '',
+        if ($snippetType === self::STANDARD_TYPE) {
+            return sprintf(self::REPLACE_FORMAT, $snippetType, $codeRelativePath, $code);
+        }
+        $codeOutput = match ($snippetType) {
             self::EXECUTABLE_TYPE => $this->getOutput($codeRealPath),
             self::ERROR_TYPE      => $this->getErrorOutput($codeRealPath),
             default               => throw new RuntimeException('Got invalid snippet type: ' . $snippetType)
         };
 
-        return sprintf(self::REPLACE_FORMAT, $snippetType, $codeRelativePath, $code, $codeOutput);
+        return sprintf(self::REPLACE_FORMAT_WITH_OUTPUT, $snippetType, $codeRelativePath, $code, $codeOutput);
     }
 
     public function shouldProcess(string $filePath): bool
@@ -101,6 +103,6 @@ final class LocalCodeSnippetProcess implements CodeSnippetProcessInterface
 
     private function formatOutput(string $output): string
     {
-        return "\n?>\n\nOUTPUT:\n\n{$output}\n\n";
+        return "\n\n{$output}\n\n";
     }
 }

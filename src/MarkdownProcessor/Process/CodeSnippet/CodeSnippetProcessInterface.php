@@ -11,7 +11,8 @@ interface CodeSnippetProcessInterface
      */
     public const STANDARD_TYPE = 'Code Snippet';
 
-    public const REPLACE_FORMAT = "[%s](%s)\n\n```php\n%s\n%s```";
+    public const REPLACE_FORMAT             = "[%s](%s)\n\n```php\n%s\n```";
+    public const REPLACE_FORMAT_WITH_OUTPUT = self::REPLACE_FORMAT . "\n\n###### Output:\n```%s```";
 
     public function getProcessedReplacement(
         string $codeRelativePath,

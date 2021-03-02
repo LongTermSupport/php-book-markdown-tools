@@ -7,7 +7,7 @@ namespace LTS\MarkdownTools\DocumentCreator\MarkdownPreprocess\Process;
 use LTS\MarkdownTools\MarkdownProcessor\Process\CodeSnippet\CodeSnippetProcessInterface;
 use LTS\MarkdownTools\RunConfig;
 
-class CodeSnippetToImageProcess implements CodeSnippetProcessInterface
+final class CodeSnippetToImageProcess implements CodeSnippetProcessInterface
 {
     private const JS_CONVERTER_PATH = __DIR__ . '/../../../../js/';
     private const VAR_PATH          = RunConfig::VAR_PATH . '/codeToImage/';
@@ -20,21 +20,22 @@ class CodeSnippetToImageProcess implements CodeSnippetProcessInterface
         string $snippetType,
         string $currentFileDir
     ): string {
-
-    }
-
-    private function copyCodeToTemp(string $codeRelativePath, string $currentFileDir): void
-    {
-
-    }
-
-    private function createCodeImage(): string
-    {
-        exec(self::CONVERT_CMD, $output, $exitCode);
+        return '';
     }
 
     public function shouldProcess(string $filePath): bool
     {
         return true;
+    }
+
+    private function copyCodeToTemp(string $codeRelativePath, string $currentFileDir): void
+    {
+    }
+
+    private function createCodeImage(): string
+    {
+        exec(self::CONVERT_CMD, $output, $exitCode);
+
+        return '';
     }
 }
