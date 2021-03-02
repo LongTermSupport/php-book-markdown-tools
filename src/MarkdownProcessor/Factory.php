@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace LTS\MarkdownTools\MarkdownProcessor;
 
 use LTS\MarkdownTools\Cache;
+use LTS\MarkdownTools\ConsoleOutput;
 use LTS\MarkdownTools\DirectoryProcessor;
 use LTS\MarkdownTools\FileProcessor;
 use LTS\MarkdownTools\MarkdownProcessor\Process\BlockQuote\DocsLinkProcess;
@@ -22,10 +23,12 @@ final class Factory
     {
         $cache      = new Cache($config->getCachePath());
         $urlFetcher = new CachingUrlFetcher($cache);
+        $output     = new ConsoleOutput();
 
         return new DirectoryProcessor(
             new FileProcessor(
                 new CodeSnippetProcessor(
+                    $output,
                     new LocalCodeSnippetProcess(),
                     new GithubCodeSnippetProcess($urlFetcher)
                 ),

@@ -53,7 +53,7 @@ fs.writeFileSync(htmlPath, codeHtml);
     await page.setViewport({
         height: 100,
         width: 600,
-        deviceScaleFactor: 2
+        deviceScaleFactor: 1
     });
     page
         .on('console', message =>

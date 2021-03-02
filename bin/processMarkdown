@@ -3,12 +3,7 @@
 
 declare(strict_types=1);
 
-use LTS\MarkdownTools\DirectoryProcessor;
-use LTS\MarkdownTools\Factory;
-use LTS\MarkdownTools\FileProcessor;
-use LTS\MarkdownTools\Process\BlockQuote\DocsLinkProcess;
-use LTS\MarkdownTools\Process\BlockQuoteProcessor;
-use LTS\MarkdownTools\Process\CodeSnippetProcessor;
+use LTS\MarkdownTools\MarkdownProcessor\Factory;
 use LTS\MarkdownTools\RunConfig;
 
 set_error_handler(static function (int $errNo, string $errMsg, string $file, int $line) {

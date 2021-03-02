@@ -13,7 +13,7 @@ final class Cache
 
     public function __construct(string $cacheDir = null)
     {
-        $this->cacheDir = $cacheDir ?? __DIR__ . '/../var/cache';
+        $this->cacheDir = $cacheDir ?? RunConfig::VAR_PATH . '/cache';
         $this->cacheDir .= '/';
         $this->assertCacheDirExists();
     }
