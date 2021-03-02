@@ -70,7 +70,7 @@ final class LocalCodeSnippetProcess implements CodeSnippetProcessInterface
             throw new RuntimeException("No output running snippet:\n{$codeRealPath}");
         }
 
-        return $this->formatOutput($output);
+        return $this->formatOutput($output, $codeRealPath);
     }
 
     private function getErrorOutput(string $codeRealPath): string
@@ -83,7 +83,7 @@ final class LocalCodeSnippetProcess implements CodeSnippetProcessInterface
             throw new RuntimeException("No expected error output running snippet:\n{$codeRealPath}");
         }
 
-        return $this->formatOutput($output);
+        return $this->formatOutput($output, $codeRealPath);
     }
 
     /**
@@ -101,8 +101,11 @@ final class LocalCodeSnippetProcess implements CodeSnippetProcessInterface
         return [$exitCode, $output];
     }
 
-    private function formatOutput(string $output): string
+    private function formatOutput(string $output, string $codeRealPath): string
     {
-        return "\n\n{$output}\n\n";
+        $basename = basename($codeRealPath);
+        $command  = "php -f {$basename}";
+
+        return "\n{$command}\n{$output}\n\n";
     }
 }

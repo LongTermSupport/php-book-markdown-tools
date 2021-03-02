@@ -113,7 +113,7 @@ echo add($foo, $bar);
 
 ###### Output:
 ```
-
+php -f itCanGetAndRunCodeSnippets.php
 And new we add some stuff3
 
 ```';
