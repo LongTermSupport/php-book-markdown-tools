@@ -38,8 +38,8 @@ final class LocalCodeSnippetProcess implements CodeSnippetProcessInterface
         }
         $codeOutput = match ($snippetType) {
             self::EXECUTABLE_TYPE => $this->getOutput($codeRealPath),
-            self::ERROR_TYPE      => $this->getErrorOutput($codeRealPath),
-            default               => throw new RuntimeException('Got invalid snippet type: ' . $snippetType)
+            self::ERROR_TYPE => $this->getErrorOutput($codeRealPath),
+            default => throw new RuntimeException('Got invalid snippet type: ' . $snippetType)
         };
         $filename   = basename($codeRelativePath);
         $command    = "{$lang} {$filename}";
@@ -115,6 +115,8 @@ final class LocalCodeSnippetProcess implements CodeSnippetProcessInterface
 
     private function formatOutput(string $output): string
     {
-        return "\n{$output}\n";
+        $wrapped = wordwrap($output, width: 60);
+
+        return "\n{$wrapped}\n";
     }
 }
