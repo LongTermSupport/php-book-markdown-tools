@@ -112,8 +112,8 @@ echo add($foo, $bar);
 ```
 
 ###### Output:
-```
-php -f itCanGetAndRunCodeSnippets.php
+```terminal php itCanGetAndRunCodeSnippets.php
+
 And new we add some stuff3
 
 ```';

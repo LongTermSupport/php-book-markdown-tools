@@ -11,13 +11,15 @@ interface CodeSnippetProcessInterface
      */
     public const STANDARD_TYPE = 'Code Snippet';
 
-    public const REPLACE_FORMAT             = "[%s](%s)\n\n```php\n%s\n```";
-    public const REPLACE_FORMAT_WITH_OUTPUT = self::REPLACE_FORMAT . "\n\n###### Output:\n```%s```";
+    public const REPLACE_FORMAT             = "[%s](%s)\n\n```%s\n%s\n```";
+    public const REPLACE_FORMAT_WITH_OUTPUT = self::REPLACE_FORMAT . "\n\n###### Output:\n```%s %s\n%s\n```";
+    public const OUTPUT_LANG                = 'terminal';
 
     public function getProcessedReplacement(
         string $codeRelativePath,
         string $snippetType,
-        string $currentFileDir
+        string $currentFileDir,
+        string $lang
     ): string;
 
     public function shouldProcess(string $filePath): bool;

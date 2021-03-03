@@ -16,14 +16,14 @@ final class GithubCodeSnippetProcess implements CodeSnippetProcessInterface
     {
     }
 
-    public function getProcessedReplacement(string $githubUrl, string $snippetType, string $currentFileDir): string
+    public function getProcessedReplacement(string $githubUrl, string $snippetType, string $currentFileDir, string $lang): string
     {
         if ($snippetType !== self::STANDARD_TYPE) {
             throw new RuntimeException('Github snippets can only be standard');
         }
         $code = $this->getRawContents($githubUrl);
 
-        return sprintf(self::REPLACE_FORMAT, $snippetType, $githubUrl, $code);
+        return sprintf(self::REPLACE_FORMAT, $snippetType, $githubUrl, $lang, $code);
     }
 
     public function shouldProcess(string $filePath): bool

@@ -41,8 +41,8 @@ echo 'This, that, the other';
 ```
 
 ###### Output:
-```
-php -f Boo.php
+```terminal php Boo.php
+
 This, that, the other
 
 ```

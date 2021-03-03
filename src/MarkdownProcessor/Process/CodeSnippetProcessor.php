@@ -12,15 +12,17 @@ use RuntimeException;
 final class CodeSnippetProcessor implements ProcessorInterface
 {
     public const FIND_SNIPPETS_REGEX = <<<REGEXP
-%^\\[(?<snippet_type>Code[^\\[]+Snippet)]\\((?<file_path>[^)]+?)\\)[^`]+?```php\n(?<snippet>.*?)\n```(\n\n###### Output:\n```(?<output>.*?\n```))?%sm
+%^\\[(?<snippet_type>Code[^\\[]+Snippet)]\\((?<file_path>[^)]+?)\\)[^`]+?```(?<lang>.+?)\n(?<snippet>.*?)\n```(\n\n###### Output:\n```(?<output_lang>.+?)?(?<command> .+?)?\n(?<output>.*?\n```))?%sm
 REGEXP;
     public const WARN_LENGTH_LINES   = 45;
 
     /** @var CodeSnippetProcessInterface[] */
     private array $processInterfaces;
 
-    public function __construct(private ConsoleOutputInterface $output, CodeSnippetProcessInterface ...$processInterfaces)
-    {
+    public function __construct(
+        private ConsoleOutputInterface $output,
+        CodeSnippetProcessInterface ...$processInterfaces
+    ) {
         $this->processInterfaces = $processInterfaces;
     }
 
@@ -30,8 +32,9 @@ REGEXP;
         foreach ($matches[0] as $index => $match) {
             $filePath    = $matches['file_path'][$index];
             $snippetType = $matches['snippet_type'][$index];
+            $lang        = $matches['lang'][$index];
             $fullFind    = $match;
-            $fullReplace = $this->getReplace($filePath, $snippetType, $currentFileDir);
+            $fullReplace = $this->getReplace($filePath, $snippetType, $currentFileDir, $lang);
             $this->errIfLongerThan($filePath, $snippetType, $fullReplace);
             $currentContents = str_replace($fullFind, $fullReplace, $currentContents);
         }
@@ -47,11 +50,11 @@ REGEXP;
         }
     }
 
-    private function getReplace(string $filePath, string $snippetType, string $currentFileDir): string
+    private function getReplace(string $filePath, string $snippetType, string $currentFileDir, string $lang): string
     {
         foreach ($this->processInterfaces as $process) {
             if ($process->shouldProcess($filePath)) {
-                return $process->getProcessedReplacement($filePath, $snippetType, $currentFileDir);
+                return $process->getProcessedReplacement($filePath, $snippetType, $currentFileDir, $lang);
             }
         }
         throw new RuntimeException('Failed finding processor for snippet: ' . $filePath);

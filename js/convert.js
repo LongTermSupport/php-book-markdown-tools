@@ -27,19 +27,30 @@ function readFile() {
     return fs.readFileSync(codeFilePath, 'utf8')
 }
 
-//
-// function highlight(sourceCode, lang = "php") {
-//     const language = Prism.languages[lang];
-//     return Prism.highlight(sourceCode, language, lang);
-// }
+function createCodeHtmlFile() {
+    let codeHtml = fs.readFileSync(__dirname + '/codeTemplate.html', 'utf8')
+    codeHtml = codeHtml
+        .replace('<code></code>', '<code>' + codeContent + '</code>')
+        .replace('language-php', 'language-' + codeFileLang)
+    const htmlPath = varPath + '/generated-code.html'
+    fs.writeFileSync(htmlPath, codeHtml);
+    return htmlPath;
+}
+
+function createTerminalHtmlFile() {
+    let terminalHtml = fs.readFileSync(__dirname + '/terminalTemplate.html', 'utf8')
+    terminalHtml = terminalHtml
+        .replace('</code>', codeContent + '</code>')
+        .replace('php -f command.php', argv.command)
+    const htmlPath = varPath + '/generated-terminal.html'
+    fs.writeFileSync(htmlPath, terminalHtml);
+    return htmlPath;
+}
 
 const codeContent = escape(readFile());
-codeHtml = fs.readFileSync(__dirname + '/codeTemplate.html', 'utf8')
-codeHtml = codeHtml
-    .replace('<code></code>', '<code>' + codeContent + '</code>')
-    .replace('language-php', 'language-' + codeFileLang)
-const htmlPath = varPath + '/highlighted-code.html'
-fs.writeFileSync(htmlPath, codeHtml);
+const htmlPath = (codeFileLang === 'terminal')
+    ? createTerminalHtmlFile()
+    : createCodeHtmlFile();
 
 // https://stackoverflow.com/a/59655506/14671323
 (async () => {
@@ -63,7 +74,7 @@ fs.writeFileSync(htmlPath, codeHtml);
     const imageBuffer = await page.screenshot({fullPage: true});
 
     await browser.close();
-    await fs.writeFile(varPath + '/highlighted-code.png', imageBuffer, function (err) {
+    await fs.writeFile(varPath + '/generated-image.png', imageBuffer, function (err) {
         if (err) throw err
     });
 })();

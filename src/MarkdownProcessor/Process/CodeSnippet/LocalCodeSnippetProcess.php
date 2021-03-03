@@ -25,7 +25,8 @@ final class LocalCodeSnippetProcess implements CodeSnippetProcessInterface
     public function getProcessedReplacement(
         string $codeRelativePath,
         string $snippetType,
-        string $currentFileDir
+        string $currentFileDir,
+        string $lang
     ): string {
         $codeRealPath = $this->getCodeRealPath(
             currentFileDir: $currentFileDir,
@@ -33,15 +34,26 @@ final class LocalCodeSnippetProcess implements CodeSnippetProcessInterface
         );
         $code         = \Safe\file_get_contents($codeRealPath);
         if ($snippetType === self::STANDARD_TYPE) {
-            return sprintf(self::REPLACE_FORMAT, $snippetType, $codeRelativePath, $code);
+            return sprintf(self::REPLACE_FORMAT, $snippetType, $codeRelativePath, $lang, $code);
         }
         $codeOutput = match ($snippetType) {
             self::EXECUTABLE_TYPE => $this->getOutput($codeRealPath),
             self::ERROR_TYPE      => $this->getErrorOutput($codeRealPath),
             default               => throw new RuntimeException('Got invalid snippet type: ' . $snippetType)
         };
+        $filename   = basename($codeRelativePath);
+        $command    = "{$lang} {$filename}";
 
-        return sprintf(self::REPLACE_FORMAT_WITH_OUTPUT, $snippetType, $codeRelativePath, $code, $codeOutput);
+        return sprintf(
+            self::REPLACE_FORMAT_WITH_OUTPUT,
+            $snippetType,
+            $codeRelativePath,
+            $lang,
+            $code,
+            self::OUTPUT_LANG,
+            $command,
+            $codeOutput
+        );
     }
 
     public function shouldProcess(string $filePath): bool
@@ -70,7 +82,7 @@ final class LocalCodeSnippetProcess implements CodeSnippetProcessInterface
             throw new RuntimeException("No output running snippet:\n{$codeRealPath}");
         }
 
-        return $this->formatOutput($output, $codeRealPath);
+        return $this->formatOutput($output);
     }
 
     private function getErrorOutput(string $codeRealPath): string
@@ -83,7 +95,7 @@ final class LocalCodeSnippetProcess implements CodeSnippetProcessInterface
             throw new RuntimeException("No expected error output running snippet:\n{$codeRealPath}");
         }
 
-        return $this->formatOutput($output, $codeRealPath);
+        return $this->formatOutput($output);
     }
 
     /**
@@ -101,11 +113,8 @@ final class LocalCodeSnippetProcess implements CodeSnippetProcessInterface
         return [$exitCode, $output];
     }
 
-    private function formatOutput(string $output, string $codeRealPath): string
+    private function formatOutput(string $output): string
     {
-        $basename = basename($codeRealPath);
-        $command  = "php -f {$basename}";
-
-        return "\n{$command}\n{$output}\n\n";
+        return "\n{$output}\n";
     }
 }

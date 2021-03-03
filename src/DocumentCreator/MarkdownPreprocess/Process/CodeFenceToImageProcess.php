@@ -4,34 +4,43 @@ declare(strict_types=1);
 
 namespace LTS\MarkdownTools\DocumentCreator\MarkdownPreprocess\Process;
 
+use LTS\MarkdownTools\ConsoleOutput;
 use LTS\MarkdownTools\ProcessorInterface;
 use LTS\MarkdownTools\RunConfig;
 use RuntimeException;
 
 final class CodeFenceToImageProcess implements ProcessorInterface
 {
-    public const  FIND_FENCE_BLOCKS_REGEX = <<<REGEXP
-%```(?<lang>.+?)?\n(?<snippet>.*?)\n```%sm
+    public const FIND_FENCE_BLOCKS_REGEX = <<<REGEXP
+%```(?<lang>.+?)?(?<command> .+?)?\n(?<snippet>.*?)\n```%sm
 REGEXP;
+    public const CHAPTER_IMAGE_FOLDER     = '/generated-images/';
+    public const LANG_PHP                 = 'php';
+    public const LANG_TERMINAL            = 'terminal';
     private const JS_CONVERTER_PATH       = __DIR__ . '/../../../../js/';
     private const VAR_PATH                = RunConfig::VAR_PATH . '/codeToImage/';
     private const CODE_TMP_PATH           = self::VAR_PATH . '/codetemp.txt';
-    private const CONVERT_CMD             = 'cd ' . self::JS_CONVERTER_PATH
-                                            . ' &&  node convert.js --lang %s --path ' . self::CODE_TMP_PATH . ' 2>&1 ';
-    private const CREATED_IMAGE_PATH      = self::JS_CONVERTER_PATH . 'highlighted-code.png';
-    public const  CHAPTER_IMAGE_FOLDER    = '/code-images/';
+    private const REDIRECT_STDERR         = ' 2>&1 ';
+    private const CONVERT_CODE_CMD        = 'cd ' . self::JS_CONVERTER_PATH
+                                            . ' &&  node convert.js --lang %s --path ' . self::CODE_TMP_PATH;
+    private const CONVERT_TERMINAL_CMD    = self::CONVERT_CODE_CMD . ' --command "%s"';
+    private const CREATED_IMAGE_PATH      = self::JS_CONVERTER_PATH . 'generated-image.png';
+
+    public function __construct(private ConsoleOutput $consoleOutput)
+    {
+    }
 
     public function getProcessedContents(string $currentContents, string $currentFileDir): string
     {
         \Safe\preg_match_all(self::FIND_FENCE_BLOCKS_REGEX, $currentContents, $matches);
         foreach ($matches[0] as $index => $match) {
-            $lang = 'none';
-            if ($matches['lang'][$index] !== '') {
-                $lang = $matches['lang'][$index];
-            }
+            $lang    = $matches['lang'][$index];
+            $command = $matches['command'][$index];
             $snippet = $matches['snippet'][$index];
             $this->copyCodeToTemp($snippet);
-            $this->createCodeImage($lang);
+            $lang === self::LANG_TERMINAL
+                ? $this->createTerminalImage($command)
+                : $this->createCodeImage($lang);
             $imagePath       = $this->copyImageToDirectory($currentFileDir, md5($snippet));
             $currentContents = $this->replaceCodeFenceWithImage($match, $imagePath, $currentContents);
         }
@@ -49,7 +58,20 @@ REGEXP;
 
     private function createCodeImage(string $lang): void
     {
-        $command = sprintf(self::CONVERT_CMD, trim($lang));
+        $command = sprintf(self::CONVERT_CODE_CMD, trim($lang));
+        $this->runCommand($command);
+    }
+
+    private function createTerminalImage(string $terminalCommand): void
+    {
+        $command = sprintf(self::CONVERT_TERMINAL_CMD, self::LANG_TERMINAL, $terminalCommand);
+        $this->runCommand($command);
+    }
+
+    private function runCommand(string $command): void
+    {
+        $command .= self::REDIRECT_STDERR;
+        $this->consoleOutput->stdOut('runCommand: ' . $command);
         exec($command, $output, $exitCode);
         if ($exitCode !== 0) {
             throw new RuntimeException(
