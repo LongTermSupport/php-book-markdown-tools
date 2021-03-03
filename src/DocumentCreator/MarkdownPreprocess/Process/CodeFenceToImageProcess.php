@@ -12,7 +12,7 @@ use RuntimeException;
 final class CodeFenceToImageProcess implements ProcessorInterface
 {
     public const FIND_FENCE_BLOCKS_REGEX = <<<REGEXP
-%```(?<lang>.+?)?(?<command> .+?)?\n(?<snippet>.*?)\n```%sm
+%^```(?<lang>[^\n]+?)?(?<command> [^\n]+?)?\n(?<snippet>.*?)\n```%sm
 REGEXP;
     public const CHAPTER_IMAGE_FOLDER     = '/generated-images/';
     public const LANG_PHP                 = 'php';
@@ -64,7 +64,7 @@ REGEXP;
 
     private function createTerminalImage(string $terminalCommand): void
     {
-        $command = sprintf(self::CONVERT_TERMINAL_CMD, self::LANG_TERMINAL, $terminalCommand);
+        $command = sprintf(self::CONVERT_TERMINAL_CMD, self::LANG_TERMINAL, trim($terminalCommand));
         $this->runCommand($command);
     }
 
