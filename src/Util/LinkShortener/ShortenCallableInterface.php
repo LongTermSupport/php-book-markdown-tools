@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace LTS\MarkdownTools\MarkdownProcessor\Process\BlockQuote\Link;
+namespace LTS\MarkdownTools\Util\LinkShortener;
 
 interface ShortenCallableInterface
 {

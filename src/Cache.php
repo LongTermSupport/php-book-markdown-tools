@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace LTS\MarkdownTools;
 
+use LTS\MarkdownTools\MarkdownProcessor\RunConfig;
 use RuntimeException;
 
 final class Cache

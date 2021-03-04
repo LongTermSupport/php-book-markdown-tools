@@ -4,7 +4,7 @@
 declare(strict_types=1);
 
 use LTS\MarkdownTools\MarkdownProcessor\Factory;
-use LTS\MarkdownTools\RunConfig;
+use LTS\MarkdownTools\MarkdownProcessor\RunConfig;
 
 set_error_handler(static function (int $errNo, string $errMsg, string $file, int $line) {
     throw new \ErrorException("\n\n$errMsg\n\n", $errNo, 1, $file, $line);

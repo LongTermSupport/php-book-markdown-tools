@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace LTS\MarkdownTools\MarkdownProcessor\Process\BlockQuote;
 
 use LTS\MarkdownTools\MarkdownProcessor\CachingUrlFetcher;
-use LTS\MarkdownTools\MarkdownProcessor\Process\BlockQuote\Link\LinkShortenerInterface;
+use LTS\MarkdownTools\Util\LinkShortener\LinkShortenerInterface;
 use RuntimeException;
 
 final class LinkProcessor

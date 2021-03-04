@@ -1,0 +1,6 @@
+parameters:
+    level: max
+    inferPrivatePropertyTypeFromConstructor: true
+    excludePaths:
+    ignoreErrors:
+        - '%expects resource, CurlHandle given%'

@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace LTS\MarkdownTools\Test\MarkdownProcessor\Process\BlockQuote\Link;
+namespace LTS\MarkdownTools\Test\Util\LinkShortener;
 
-use LTS\MarkdownTools\MarkdownProcessor\Process\BlockQuote\Link\CachingLinkShortener;
-use LTS\MarkdownTools\MarkdownProcessor\Process\BlockQuote\Link\ShortenCallableInterface;
 use LTS\MarkdownTools\Test\TestHelper;
+use LTS\MarkdownTools\Util\LinkShortener\CachingLinkShortener;
+use LTS\MarkdownTools\Util\LinkShortener\ShortenCallableInterface;
 use PHPUnit\Framework\TestCase;
 
 /**
  * @internal
  * @covers \LTS\MarkdownTools\Cache
- * @covers \LTS\MarkdownTools\MarkdownProcessor\Process\BlockQuote\Link\CachingLinkShortener
+ * @covers \LTS\MarkdownTools\Util\LinkShortener\CachingLinkShortener
  *
  * @small
  */

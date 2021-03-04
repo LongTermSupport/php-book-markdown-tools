@@ -4,25 +4,23 @@ lkjhb lkALSKJH KJAHSD KJASD
 
 > https://www.php.net/manual/en/language.oop5.autoload.php
 
-asdasd asd 
+asdasd asd
 
 > asdkjh aksjhd khjasd
 > ljhaskdjh kasjhd kjhasd
 
-[Code Snippet](./../../Bing/Bang/Bong/Blah.php)
+[Code Snippet](./../../../Code/Bang/Bong/Blah.php)
 
 ```php
-kjhasdkjh kjhaskdjjkasd
+
 ```
 
-kjha skjdh kjhaskdjh 
-kjhaskdjh kjas kdjh asd
-kljhkljasd kjh kajsd
+kjha skjdh kjhaskdjh kjhaskdjh kjas kdjh asd kljhkljasd kjh kajsd
 
-[Code Executable Snippet](./../../Bing/Bang/Bong/Boo.php)
+[Code Executable Snippet](./../../../Code/Bang/Bong/Boo.php)
 
 ```php
-kj kjewr kjh hjkwer
+
 ```
 
 kjh weiurh iuuihjksadhj hasd

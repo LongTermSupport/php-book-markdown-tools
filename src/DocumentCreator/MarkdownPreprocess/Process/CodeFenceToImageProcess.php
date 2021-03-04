@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace LTS\MarkdownTools\DocumentCreator\MarkdownPreprocess\Process;
 
 use LTS\MarkdownTools\ConsoleOutput;
+use LTS\MarkdownTools\MarkdownProcessor\RunConfig;
 use LTS\MarkdownTools\ProcessorInterface;
-use LTS\MarkdownTools\RunConfig;
 use RuntimeException;
 
 final class CodeFenceToImageProcess implements ProcessorInterface

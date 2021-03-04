@@ -15,7 +15,6 @@ use LTS\MarkdownTools\MarkdownProcessor\Process\BlockQuoteProcessor;
 use LTS\MarkdownTools\MarkdownProcessor\Process\CodeSnippet\GithubCodeSnippetProcess;
 use LTS\MarkdownTools\MarkdownProcessor\Process\CodeSnippet\LocalCodeSnippetProcess;
 use LTS\MarkdownTools\MarkdownProcessor\Process\CodeSnippetProcessor;
-use LTS\MarkdownTools\RunConfig;
 
 final class Factory
 {

@@ -41,7 +41,7 @@ final class DirectoryProcessorTest extends TestCase
                 createInDir: self::TEST_DIR . '/Chapter' . $i
             );
         }
-        $config = new \LTS\MarkdownTools\RunConfig(pathToChapters: self::TEST_DIR);
+        $config = new \LTS\MarkdownTools\MarkdownProcessor\RunConfig(pathToChapters: self::TEST_DIR);
         self::getProcessor()->run($config);
         $actual = TestHelper::getFilesContents(self::TEST_DIR);
         self::assertSame(self::EXPECTED, $actual);

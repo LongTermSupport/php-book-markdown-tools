@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace LTS\MarkdownTools\MarkdownProcessor\Process\CodeSnippet;
 
-use LTS\MarkdownTools\Helper;
+use LTS\MarkdownTools\Util\Helper;
 use RuntimeException;
 
 final class LocalCodeSnippetProcess implements CodeSnippetProcessInterface
@@ -38,8 +38,8 @@ final class LocalCodeSnippetProcess implements CodeSnippetProcessInterface
         }
         $codeOutput = match ($snippetType) {
             self::EXECUTABLE_TYPE => $this->getOutput($codeRealPath),
-            self::ERROR_TYPE => $this->getErrorOutput($codeRealPath),
-            default => throw new RuntimeException('Got invalid snippet type: ' . $snippetType)
+            self::ERROR_TYPE      => $this->getErrorOutput($codeRealPath),
+            default               => throw new RuntimeException('Got invalid snippet type: ' . $snippetType)
         };
         $filename   = basename($codeRelativePath);
         $command    = "{$lang} {$filename}";

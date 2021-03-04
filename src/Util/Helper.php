@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace LTS\MarkdownTools;
+namespace LTS\MarkdownTools\Util;
 
 use RuntimeException;
 
@@ -31,5 +31,11 @@ final class Helper
         }
 
         return '/' . implode('/', $path);
+    }
+
+    public static function removeDuplicateUrlSlashes(string $url): string
+    {
+        return preg_replace('%(?<!:)/{2,}%', '/', $url)
+               ?? throw new RuntimeException('Regex failure in ' . __METHOD__);
     }
 }

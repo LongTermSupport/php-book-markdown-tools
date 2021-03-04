@@ -6,7 +6,7 @@ namespace LTS\MarkdownTools\MarkdownProcessor\Process\BlockQuote;
 
 use LTS\MarkdownTools\Cache;
 use LTS\MarkdownTools\MarkdownProcessor\CachingUrlFetcher;
-use LTS\MarkdownTools\MarkdownProcessor\Process\BlockQuote\Link\WikipediaLinkShortener;
+use LTS\MarkdownTools\Util\LinkShortener\WikipediaLinkShortener;
 
 final class WikipediaLinkProcess implements BlockQuoteProcess
 {

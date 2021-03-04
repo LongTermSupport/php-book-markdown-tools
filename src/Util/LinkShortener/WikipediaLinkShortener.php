@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace LTS\MarkdownTools\MarkdownProcessor\Process\BlockQuote\Link;
+namespace LTS\MarkdownTools\Util\LinkShortener;
 
+use InvalidArgumentException;
 use LTS\MarkdownTools\Cache;
 use RuntimeException;
 use Throwable;
@@ -30,6 +31,9 @@ curl 'https://meta.wikimedia.org/w/api.php' \
 --data-raw 'action=shortenurl&format=json&url=%s' \
 --compressed 2>&1
 CMDLINE;
+    private const URL_REGEXP = <<<'REGEXP'
+%^.*?\.(wikipedia|wiktionary|wikibooks|wikinews|wikiquote|wikisource|wikiversity|wikivoyage|wikimedia|wikidata.org|mediawiki)\.org%
+REGEXP;
 
     private CachingLinkShortener $cachingLinkShortener;
 
@@ -40,9 +44,27 @@ CMDLINE;
 
     public function getShortenedLinkMarkDown(string $longUrl): string
     {
+        $this->assertValidUrl($longUrl);
         $shortUrl = $this->cachingLinkShortener->getShortUrl($longUrl);
 
         return "[{$shortUrl}]({$longUrl})";
+    }
+
+    /**
+     * *.wikipedia|wiktionary|wikibooks|wikinews|wikiquote|wikisource.org,
+     * *.wikiversity|wikivoyage|wikimedia|wikidata.org and *.mediawiki.org.
+     */
+    public function canShorten(string $longUrl): bool
+    {
+        return \Safe\preg_match(self::URL_REGEXP, $longUrl) === 1;
+    }
+
+    private function assertValidUrl(string $longUrl): void
+    {
+        if ($this->canShorten($longUrl) === true) {
+            return;
+        }
+        throw new InvalidArgumentException('Invalid wikimedia url: ' . $longUrl);
     }
 
     private function getCallable(): ShortenCallableInterface

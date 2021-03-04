@@ -17,60 +17,56 @@ use PHPUnit\Framework\TestCase;
  */
 final class CodeFenceToImageProcessTest extends TestCase
 {
-    private const TEST_FILE       = 'Chapter1-Expected.md';
-    private const FIXTURE_PATH    = TestHelper::FIXTURE_PATH . self::TEST_FILE;
-    private const TEST_DIR        = TestHelper::VAR_PATH . 'CodeFenceToImageProcessTest/';
-    private const TEST_PATH       = self::TEST_DIR . self::TEST_FILE;
-    private const TEST_IMAGE_PATH = self::TEST_DIR . CodeFenceToImageProcess::CHAPTER_IMAGE_FOLDER;
-    private CodeFenceToImageProcess $process;
-
-    public function setUp(): void
-    {
-        TestHelper::nuke();
-        TestHelper::createVarDir(self::TEST_DIR);
-        $this->process = new CodeFenceToImageProcess(new ConsoleOutput());
-        \Safe\file_put_contents(
-            self::TEST_PATH,
-            \Safe\file_get_contents(self::FIXTURE_PATH)
-        );
-    }
-
-    /** @test */
-    public function itConvertsFencesToImages(): void
-    {
-        $expected = '# kjhasdkjh kwjer kjhs adkh kwer
+    private const TEST_DIR      = TestHelper::VAR_PATH . 'CodeFenceToImageProcessTest/';
+    private const CHAPTER1_PATH = self::TEST_DIR . TestHelper::CHAPTER1_SUB_PATH;
+    private const EXPECTED      = <<<'MARKDOWN'
+# kjhasdkjh kwjer kjhs adkh kwer
 
 lkjhb lkALSKJH KJAHSD KJASD
 
 > ###### PHP: Autoloading Classes - Manual 
 > https://www.php.net/manual/en/language.oop5.autoload.php
 
-asdasd asd 
+asdasd asd
 
 > asdkjh aksjhd khjasd
 > ljhaskdjh kasjhd kjhasd
 
-[Code Snippet](./../../Bing/Bang/Bong/Blah.php)
+[Code Snippet](./../../../Code/Bang/Bong/Blah.php)
 
-![](./generated-images/0b0e7076ab7e7b0c7afd920259adf88b.png)
+![](./generated-images/acdac3c66e65799f9a7212db8f8a8f71.png)
 
-kjha skjdh kjhaskdjh 
-kjhaskdjh kjas kdjh asd
-kljhkljasd kjh kajsd
+kjha skjdh kjhaskdjh kjhaskdjh kjas kdjh asd kljhkljasd kjh kajsd
 
-[Code Executable Snippet](./../../Bing/Bang/Bong/Boo.php)
+[Code Executable Snippet](./../../../Code/Bang/Bong/Boo.php)
 
-![](./generated-images/c1ab54cfb56e77a014b3219034480905.png)
+![](./generated-images/ab65ef0a3c393a9a17626a6abb0eb70d.png)
 
 ###### Output:
 ![](./generated-images/8941ac9f5b6279ffcdd581854eadccc0.png)
 
-kjh weiurh iuuihjksadhj hasd';
-        $actual   = $this->process->getProcessedContents(
-            \Safe\file_get_contents(self::TEST_PATH),
-            self::TEST_DIR
+kjh weiurh iuuihjksadhj hasd
+MARKDOWN;
+
+    private CodeFenceToImageProcess $process;
+
+    public function setUp(): void
+    {
+        TestHelper::setupProcessedFixtures(self::TEST_DIR);
+        $this->process = new CodeFenceToImageProcess(new ConsoleOutput());
+    }
+
+    /** @test */
+    public function itConvertsFencesToImages(): void
+    {
+        $chapterDir = dirname(self::CHAPTER1_PATH);
+        $actual     = $this->process->getProcessedContents(
+            \Safe\file_get_contents(self::CHAPTER1_PATH),
+            $chapterDir
         );
-        self::assertDirectoryExists(self::TEST_IMAGE_PATH);
-        self::assertSame(trim($expected), trim($actual));
+        $imagePath  = $chapterDir . CodeFenceToImageProcess::CHAPTER_IMAGE_FOLDER;
+        self::assertDirectoryExists($imagePath);
+        self::assertCount(3, (array)glob("{$imagePath}/*.png"));
+        self::assertSame(trim(self::EXPECTED), trim($actual));
     }
 }

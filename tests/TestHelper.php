@@ -6,20 +6,56 @@ namespace LTS\MarkdownTools\Test;
 
 use InvalidArgumentException;
 use LTS\MarkdownTools\Cache;
-use LTS\MarkdownTools\Helper;
+use LTS\MarkdownTools\MarkdownProcessor\Factory;
+use LTS\MarkdownTools\MarkdownProcessor\RunConfig;
+use LTS\MarkdownTools\Util\Helper;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
+use RuntimeException;
 
 final class TestHelper
 {
-    public const FIXTURE_PATH = __DIR__ . '/Fixture/';
-    public const VAR_PATH     = __DIR__ . '/../var/tests/';
-    public const CACHE_PATH   = __DIR__ . '/../var/tests-cache/';
+    public const PROJECT_ROOT_PATH = __DIR__ . '/../';
+    public const FIXTURE_PATH      = __DIR__ . '/Fixture/';
+    public const CHAPTER_SUB_PATH  = '/Fixture/Chapters/';
+    public const CHAPTER1_SUB_PATH = self::CHAPTER_SUB_PATH . '/Bar/Baz/Chapter1.md';
+    public const CODE_SUB_PATH     = '/Fixture/Code/';
+    public const VAR_PATH          = __DIR__ . '/../var/tests/';
+    public const CACHE_PATH        = __DIR__ . '/../var/tests-cache/';
     private static Cache $cache;
 
     public static function nuke(): void
     {
         exec('rm -rf ' . self::VAR_PATH);
+    }
+
+    /**
+     * Setup a clean copy of fixtures in var path.
+     */
+    public static function setupFixtures(string $varPath): void
+    {
+        self::createVarDir($varPath);
+        $fixturesPath = Helper::resolveRelativePath(self::FIXTURE_PATH);
+        $command      = "cp -r {$fixturesPath} {$varPath}/ ";
+        exec($command, $output, $exitCode);
+        if ($exitCode !== 0) {
+            throw new RuntimeException('Failed prepping work dir: ' . implode("\n", $output));
+        }
+    }
+
+    /**
+     * Setup a clean copy of the fixtures then run the markdown process on them.
+     *
+     * @throws \LTS\MarkdownTools\ProcessingException
+     */
+    public static function setupProcessedFixtures(string $varPath): void
+    {
+        self::setupFixtures($varPath);
+        $config = new RunConfig(
+            pathToChapters: $varPath . self::CHAPTER_SUB_PATH,
+            cachePath: self::CACHE_PATH
+        );
+        Factory::create($config)->run($config);
     }
 
     public static function getCache(): Cache
@@ -33,6 +69,7 @@ final class TestHelper
         if (!is_dir(filename: $createDir)) {
             \Safe\mkdir(pathname: $createDir, mode: 0777, recursive: true);
         }
+        exec("rm -rf {$createDir}/*");
     }
 
     public static function createTestFile(
