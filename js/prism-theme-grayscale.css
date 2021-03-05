@@ -1,0 +1,243 @@
+/**
+ * Grayscale theme trying to look OK in print
+ */
+/* ubuntu-mono-regular - latin */
+@font-face {
+    font-family: 'Ubuntu Mono';
+    font-style: normal;
+    font-weight: 400;
+    src: url('./fonts/ubuntu-mono-v10-latin/ubuntu-mono-v10-latin-regular.eot'); /* IE9 Compat Modes */
+    src: local(''),
+    url('./fonts/ubuntu-mono-v10-latin/ubuntu-mono-v10-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */ url('./fonts/ubuntu-mono-v10-latin/ubuntu-mono-v10-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */ url('./fonts/ubuntu-mono-v10-latin/ubuntu-mono-v10-latin-regular.woff') format('woff'), /* Modern Browsers */ url('./fonts/ubuntu-mono-v10-latin/ubuntu-mono-v10-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */ url('./fonts/ubuntu-mono-v10-latin/ubuntu-mono-v10-latin-regular.svg#UbuntuMono') format('svg'); /* Legacy iOS */
+}
+
+code[class*="language-"],
+pre[class*="language-"] {
+    color: black;
+    background: none;
+    font-family: 'Ubuntu Mono';
+    font-size: .8em;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+    position: relative;
+    background-color: #fdfdfd;
+    background-origin: content-box;
+    background-attachment: local;
+    margin: .5em 0;
+    padding: 0 1em;
+}
+
+pre[class*="language-"] > code {
+    display: block;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+    position: relative;
+    padding: .2em;
+    border-radius: 0.3em;
+    color: #717171;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    display: inline;
+    white-space: normal;
+    background-color: #fdfdfd;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.token.comment,
+.token.block-comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+    color: #7D8B99;
+}
+
+.token.punctuation {
+    color: #999999;
+}
+
+.token.argument-name {
+    font-style: italic;
+    color: #7D8B99;
+}
+
+.token.scope {
+    font-weight: bold;
+}
+
+.token.package{
+    color: #6f6f6f;
+}
+.token.this{
+    font-weight: bold;
+    color: #6f6f6f;
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.function-name,
+.token.constant,
+.token.symbol,
+.token.deleted {
+    color: #3c3c3c;
+    font-weight: bold;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.function,
+.token.builtin,
+.token.inserted {
+    color: hsl(0 0% 29% / 1);
+    font-weight: bolder;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.token.variable {
+    color: #3c3c3c;
+    font-weight: bolder
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword,
+.token.class-name {
+    color: #151515;
+}
+
+.token.regex,
+.token.important {
+    color: #6b6b6b;
+}
+
+.language-css .token.string,
+.style .token.string {
+    color: #696969;
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.token.return-type{
+    font-style: italic;
+}
+
+.token.important {
+    font-weight: bold;
+    color: #000;
+}
+
+.token.bold {
+    font-weight: bold;
+}
+
+.token.italic {
+    font-style: italic;
+}
+
+.token.entity {
+    cursor: help;
+}
+
+.token.namespace {
+    opacity: .7;
+}
+
+/** MATCH BRACES **/
+.token.punctuation.brace-hover,
+.token.punctuation.brace-selected {
+    outline: solid 1px;
+}
+
+.rainbow-braces .token.punctuation.brace-level-1,
+.rainbow-braces .token.punctuation.brace-level-5,
+.rainbow-braces .token.punctuation.brace-level-9 {
+    color: hsl(0 0% 20% / 1);
+    opacity: 1;
+}
+
+.rainbow-braces .token.punctuation.brace-level-2,
+.rainbow-braces .token.punctuation.brace-level-6,
+.rainbow-braces .token.punctuation.brace-level-10 {
+    color: hsl(0 0% 40% / 1);
+    opacity: 1;
+}
+
+.rainbow-braces .token.punctuation.brace-level-3,
+.rainbow-braces .token.punctuation.brace-level-7,
+.rainbow-braces .token.punctuation.brace-level-11 {
+    color: hsl(0 0% 30% / 1);
+    opacity: 1;
+}
+
+.rainbow-braces .token.punctuation.brace-level-4,
+.rainbow-braces .token.punctuation.brace-level-8,
+.rainbow-braces .token.punctuation.brace-level-12 {
+    color: hsl(0 0% 40% / 1);
+    opacity: 1;
+}
+
+/** LINE NUMBERS **/
+pre[class*="language-"].line-numbers {
+    position: relative;
+    padding-left: 2em;
+    counter-reset: linenumber;
+}
+
+pre[class*="language-"].line-numbers > code {
+    position: relative;
+    white-space: inherit;
+}
+
+.line-numbers .line-numbers-rows {
+    position: absolute;
+    pointer-events: none;
+    top: 0;
+    font-size: 100%;
+    left: -3.8em;
+    width: 3em; /* works for line-numbers below 1000 lines */
+    letter-spacing: -1px;
+    border-right: 1px solid #999;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+}
+
+.line-numbers-rows > span {
+    display: block;
+    counter-increment: linenumber;
+}
+
+.line-numbers-rows > span:before {
+    content: counter(linenumber);
+    color: #999;
+    display: block;
+    padding-right: 0.8em;
+    text-align: right;
+}

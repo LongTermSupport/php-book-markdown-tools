@@ -94,6 +94,7 @@ body {
 #terminal__body {
     background: rgba(56, 4, 40, 0.9);
     font-family: 'Ubuntu Mono';
+    font-size: 10px;
     padding: 10px;
     margin-top: -1px;
     color: #dddddd;

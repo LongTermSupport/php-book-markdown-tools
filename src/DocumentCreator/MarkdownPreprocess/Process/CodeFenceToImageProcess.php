@@ -5,18 +5,18 @@ declare(strict_types=1);
 namespace LTS\MarkdownTools\DocumentCreator\MarkdownPreprocess\Process;
 
 use LTS\MarkdownTools\ConsoleOutput;
-use LTS\MarkdownTools\MarkdownProcessor\RunConfig;
+use LTS\MarkdownTools\DocumentCreator\MarkdownPreprocess\RunConfig;
 use LTS\MarkdownTools\ProcessorInterface;
 use RuntimeException;
 
 final class CodeFenceToImageProcess implements ProcessorInterface
 {
-    public const FIND_FENCE_BLOCKS_REGEX = <<<REGEXP
+    public const  FIND_FENCE_BLOCKS_REGEX = <<<REGEXP
 %^```(?<lang>[^\n]+?)?(?<command> [^\n]+?)?\n(?<snippet>.*?)\n```%sm
 REGEXP;
-    public const CHAPTER_IMAGE_FOLDER     = '/generated-images/';
-    public const LANG_PHP                 = 'php';
-    public const LANG_TERMINAL            = 'terminal';
+    public const  CHAPTER_IMAGE_FOLDER    = '/generated-images/';
+    public const  LANG_PHP                = 'php';
+    public const  LANG_TERMINAL           = 'terminal';
     private const JS_CONVERTER_PATH       = __DIR__ . '/../../../../js/';
     private const VAR_PATH                = RunConfig::VAR_PATH . '/codeToImage/';
     private const CODE_TMP_PATH           = self::VAR_PATH . '/codetemp.txt';
@@ -26,7 +26,7 @@ REGEXP;
     private const CONVERT_TERMINAL_CMD    = self::CONVERT_CODE_CMD . ' --command "%s"';
     private const CREATED_IMAGE_PATH      = self::JS_CONVERTER_PATH . 'generated-image.png';
 
-    public function __construct(private ConsoleOutput $consoleOutput)
+    public function __construct(private RunConfig $runConfig, private ConsoleOutput $consoleOutput)
     {
     }
 
@@ -34,18 +34,47 @@ REGEXP;
     {
         \Safe\preg_match_all(self::FIND_FENCE_BLOCKS_REGEX, $currentContents, $matches);
         foreach ($matches[0] as $index => $match) {
-            $lang    = $matches['lang'][$index];
-            $command = $matches['command'][$index];
-            $snippet = $matches['snippet'][$index];
-            $this->copyCodeToTemp($snippet);
-            $lang === self::LANG_TERMINAL
-                ? $this->createTerminalImage($command)
-                : $this->createCodeImage($lang);
-            $imagePath       = $this->copyImageToDirectory($currentFileDir, md5($snippet));
+            $lang = $matches['lang'][$index];
+            if (!$this->shouldProcessLang($lang)) {
+                continue;
+            }
+            $command     = $matches['command'][$index];
+            $snippet     = $matches['snippet'][$index];
+            $snippetHash = md5($snippet);
+            $imagePath   = $this->getImagePath($currentFileDir, $snippetHash);
+            if (false === $this->imageAlreadyExists($imagePath)) {
+                $this->copyCodeToTemp($snippet);
+                $lang === self::LANG_TERMINAL
+                    ? $this->createTerminalImage($command)
+                    : $this->createCodeImage($lang);
+                $this->copyImageToDirectory($imagePath);
+            }
+
             $currentContents = $this->replaceCodeFenceWithImage($match, $imagePath, $currentContents);
         }
 
         return $currentContents;
+    }
+
+    private function shouldProcessLang(string $lang): bool
+    {
+        if ($lang === self::LANG_TERMINAL) {
+            return $this->runConfig->isConvertOutputToTerminalImage();
+        }
+
+        return $this->runConfig->isConvertCodeToImage();
+    }
+
+    private function getImagePath(string $currentFileDir, string $snippetHash): string
+    {
+        $imageDir = $currentFileDir . self::CHAPTER_IMAGE_FOLDER;
+
+        return "{$imageDir}/{$snippetHash}.png";
+    }
+
+    private function imageAlreadyExists(string $imagePath): bool
+    {
+        return file_exists($imagePath);
     }
 
     private function copyCodeToTemp(string $snippet): void
@@ -80,18 +109,15 @@ REGEXP;
         }
     }
 
-    private function copyImageToDirectory(string $currentFileDir, string $snippetHash): string
+    private function copyImageToDirectory(string $imagePath): void
     {
-        $imageDir = $currentFileDir . self::CHAPTER_IMAGE_FOLDER;
+        $imageDir = dirname($imagePath);
         if (!is_dir($imageDir)) {
             if (!mkdir($imageDir, 0777, true) && !is_dir($imageDir)) {
                 throw new RuntimeException(sprintf('Directory "%s" was not created', $imageDir));
             }
         }
-        $imagePath = "{$imageDir}/{$snippetHash}.png";
         \Safe\file_put_contents($imagePath, \Safe\file_get_contents(self::CREATED_IMAGE_PATH));
-
-        return $imagePath;
     }
 
     private function replaceCodeFenceWithImage(string $fullFind, string $imagePath, string $currentContents): string

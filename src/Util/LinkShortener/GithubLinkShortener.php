@@ -28,9 +28,8 @@ final class GithubLinkShortener implements LinkShortenerInterface
     {
         $this->assertValidUrl($longUrl);
         $shortUrl     = $this->cachingLinkShortener->getShortUrl($longUrl);
-        $relativePath = $this->getRelativePathFromGithubUrl($longUrl);
 
-        return "[{$shortUrl}]({$longUrl}) {$relativePath}";
+        return "[{$shortUrl}]({$longUrl})";
     }
 
     private function assertValidUrl(string $longUrl): void
@@ -41,7 +40,7 @@ final class GithubLinkShortener implements LinkShortenerInterface
         throw new InvalidArgumentException('Invalid github url: ' . $longUrl);
     }
 
-    private function getRelativePathFromGithubUrl(string $githubUrl): string
+    public function getRelativePathFromGithubUrl(string $githubUrl): string
     {
         $pattern = '%https://github.com/[^/]+?/[^/]+?/[^/]+?/[^/]+?/(?<relative_path>.+)%';
         \Safe\preg_match($pattern, $githubUrl, $matches);

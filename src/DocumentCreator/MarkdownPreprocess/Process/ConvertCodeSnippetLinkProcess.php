@@ -25,7 +25,7 @@ REGEXP;
         \Safe\preg_match_all(self::CODE_SNIPPET_LINK_REGEXP, $currentContents, $matches);
         foreach ($matches[0] as $index => $match) {
             $filePath = $matches['file_path'][$index];
-            $replace  = $this->processMatch($currentContents, $currentFileDir, $filePath);
+            $replace  = $this->processMatch($currentFileDir, $filePath);
             if ($replace === null) {
                 continue;
             }
@@ -35,23 +35,37 @@ REGEXP;
         return $currentContents;
     }
 
-    private function processMatch(string $currentContents, string $currentFileDir, string $filePath): ?string
+    private function processMatch(string $currentFileDir, string $filePath): ?string
     {
         if (str_starts_with($filePath, './') === true) {
-            return $this->processLocalFile($currentContents, $currentFileDir, $filePath);
+            return $this->processLocalFile($currentFileDir, $filePath);
         }
         if ($this->githubLinkShortener->canShorten($filePath) === true) {
-            return $this->githubLinkShortener->getShortenedLinkMarkDown($filePath);
+            return $this->getMarkdownForGithubUrl($filePath);
         }
 
         return null;
     }
 
-    private function processLocalFile(string $currentContents, string $currentFileDir, string $filePath): string
+    private function getMarkdownForGithubUrl(string $githubUrl): string
+    {
+        $markdownLink = $this->githubLinkShortener->getShortenedLinkMarkDown($githubUrl);
+        $relativePath = $this->githubLinkShortener->getRelativePathFromGithubUrl($githubUrl);
+
+        return <<<MARKDOWN
+        
+        > 
+        > ###### $relativePath 
+        > **Repo:** $markdownLink        
+        MARKDOWN;
+
+    }
+
+    private function processLocalFile(string $currentFileDir, string $filePath): string
     {
         $githubUrl = $this->getGithubUrlFromLocalFilePath($currentFileDir, $filePath);
 
-        return $this->githubLinkShortener->getShortenedLinkMarkDown($githubUrl);
+        return $this->getMarkdownForGithubUrl($githubUrl);
     }
 
     private function getGithubUrlFromLocalFilePath(string $currentFileDir, string $filePath): string

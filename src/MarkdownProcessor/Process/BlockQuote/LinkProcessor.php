@@ -21,13 +21,19 @@ final class LinkProcessor
      */
     public const REGEX_LINK_LOOKAHEAD = '(?=\))%';
 
+    public const ALREADY_PROCESSED_REGEX = <<<REGEXP
+%> ######[^\n]+?\n> (http.+|\[[^]]+?]\([^)]+\))%m
+REGEXP;
+
+
     public function __construct(private string $urlRegexp, private CachingUrlFetcher $urlFetcher)
     {
     }
 
     public function shouldProcess(string $blockquote): bool
     {
-        return preg_match(pattern: $this->urlRegexp, subject: $blockquote) === 1;
+        return (preg_match(pattern: $this->urlRegexp, subject: $blockquote) === 1)
+               && false === $this->isAlreadyProcessed($blockquote);
     }
 
     public function processBlockQuote(string $blockquote, LinkShortenerInterface $linkShortener = null): string
@@ -66,6 +72,11 @@ MARKDOWN;
         }
 
         return $matches[0];
+    }
+
+    public function isAlreadyProcessed(string $blockquote): bool
+    {
+        return 1 === preg_match(self::ALREADY_PROCESSED_REGEX, $blockquote);
     }
 
     private function getMatchedParensWrappedUrl(string $blockquote): ?string

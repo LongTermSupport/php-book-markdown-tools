@@ -21,6 +21,8 @@ final class RunConfig implements PathToChaptersConfigInterface
         private string $githubRepoBaseUrl,
         private string $localRepoBasePath,
         private string $pathToChapters,
+        private bool $convertCodeToImage = false,
+        private bool $convertOutputToTerminalImage = true,
         private ?string $cachePath = null
     ) {
         $this->assertValidGithubUrl();
@@ -53,4 +55,16 @@ final class RunConfig implements PathToChaptersConfigInterface
             throw new InvalidArgumentException('Github url ' . $this->githubRepoBaseUrl . 'does not include /blob/');
         }
     }
+
+    public function isConvertCodeToImage(): bool
+    {
+        return $this->convertCodeToImage;
+    }
+
+    public function isConvertOutputToTerminalImage(): bool
+    {
+        return $this->convertOutputToTerminalImage;
+    }
+
+
 }
