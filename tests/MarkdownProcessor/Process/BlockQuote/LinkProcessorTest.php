@@ -2,14 +2,21 @@
 
 declare(strict_types=1);
 
-namespace MarkdownProcessor\Process\BlockQuote;
+namespace LTS\MarkdownTools\Test\MarkdownProcessor\Process\BlockQuote;
 
+use Generator;
 use LTS\MarkdownTools\MarkdownProcessor\CachingUrlFetcher;
 use LTS\MarkdownTools\MarkdownProcessor\Process\BlockQuote\LinkProcessor;
 use LTS\MarkdownTools\Test\TestHelper;
 use PHPUnit\Framework\TestCase;
 
-class LinkProcessorTest extends TestCase
+/**
+ * @internal
+ * @covers \LTS\MarkdownTools\MarkdownProcessor\Process\BlockQuote\LinkProcessor
+ *
+ * @small
+ */
+final class LinkProcessorTest extends TestCase
 {
     private const URL_REGEXP = '%https://.+?%';
     private LinkProcessor $processor;
@@ -19,7 +26,10 @@ class LinkProcessorTest extends TestCase
         $this->processor = new LinkProcessor(self::URL_REGEXP, new CachingUrlFetcher(TestHelper::getCache()));
     }
 
-    public function provideAlreadyProcessed(): \Generator
+    /**
+     * @return Generator<string, array<int,string|bool>>
+     */
+    public function provideAlreadyProcessed(): Generator
     {
         yield 'yes' => [
             '> ###### GitHub - WordPress/wordpress-develop

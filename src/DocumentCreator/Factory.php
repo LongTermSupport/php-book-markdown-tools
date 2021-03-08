@@ -22,7 +22,7 @@ final class Factory
 
         return new DirectoryProcessor(
             new FileProcessor(
-                new CodeFenceToImageProcess($runConfig,$consoleOutput),
+                new CodeFenceToImageProcess($runConfig, $consoleOutput),
                 new ConvertCodeSnippetLinkProcess($runConfig, new GithubLinkShortener($cache))
             )
         );

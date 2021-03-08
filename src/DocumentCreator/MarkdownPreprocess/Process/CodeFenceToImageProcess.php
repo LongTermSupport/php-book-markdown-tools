@@ -11,12 +11,12 @@ use RuntimeException;
 
 final class CodeFenceToImageProcess implements ProcessorInterface
 {
-    public const  FIND_FENCE_BLOCKS_REGEX = <<<REGEXP
+    public const FIND_FENCE_BLOCKS_REGEX = <<<REGEXP
 %^```(?<lang>[^\n]+?)?(?<command> [^\n]+?)?\n(?<snippet>.*?)\n```%sm
 REGEXP;
-    public const  CHAPTER_IMAGE_FOLDER    = '/generated-images/';
-    public const  LANG_PHP                = 'php';
-    public const  LANG_TERMINAL           = 'terminal';
+    public const CHAPTER_IMAGE_FOLDER     = '/generated-images/';
+    public const LANG_PHP                 = 'php';
+    public const LANG_TERMINAL            = 'terminal';
     private const JS_CONVERTER_PATH       = __DIR__ . '/../../../../js/';
     private const VAR_PATH                = RunConfig::VAR_PATH . '/codeToImage/';
     private const CODE_TMP_PATH           = self::VAR_PATH . '/codetemp.txt';
@@ -42,7 +42,7 @@ REGEXP;
             $snippet     = $matches['snippet'][$index];
             $snippetHash = md5($snippet);
             $imagePath   = $this->getImagePath($currentFileDir, $snippetHash);
-            if (false === $this->imageAlreadyExists($imagePath)) {
+            if ($this->imageAlreadyExists($imagePath) === false) {
                 $this->copyCodeToTemp($snippet);
                 $lang === self::LANG_TERMINAL
                     ? $this->createTerminalImage($command)

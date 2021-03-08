@@ -18,6 +18,15 @@
     url('./fonts/ubuntu-v15-latin/ubuntu-v15-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */ url('./fonts/ubuntu-v15-latin/ubuntu-v15-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */ url('./fonts/ubuntu-v15-latin/ubuntu-v15-latin-regular.woff') format('woff'), /* Modern Browsers */ url('./fonts/ubuntu-v15-latin/ubuntu-v15-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */ url('./fonts/ubuntu-v15-latin/ubuntu-v15-latin-regular.svg#Ubuntu') format('svg'); /* Legacy iOS */
 }
 
+#terminal__body {
+    background: rgba(56, 4, 40, 0.9);
+    font-family: 'Ubuntu Mono';
+    font-size: 12px;
+    padding: 10px;
+    margin-top: -1px;
+    color: #dddddd;
+}
+
 body {
     background: linear-gradient(45deg, #c7c7c7 0%, #323232 100%);
     font-family: Ubuntu;
@@ -91,14 +100,7 @@ body {
     line-height: 15px;
 }
 
-#terminal__body {
-    background: rgba(56, 4, 40, 0.9);
-    font-family: 'Ubuntu Mono';
-    font-size: 10px;
-    padding: 10px;
-    margin-top: -1px;
-    color: #dddddd;
-}
+
 
 #terminal__prompt {
     display: flex;

@@ -32,20 +32,20 @@ final class GithubLinkShortener implements LinkShortenerInterface
         return "[{$shortUrl}]({$longUrl})";
     }
 
-    private function assertValidUrl(string $longUrl): void
-    {
-        if ($this->canShorten($longUrl)) {
-            return;
-        }
-        throw new InvalidArgumentException('Invalid github url: ' . $longUrl);
-    }
-
     public function getRelativePathFromGithubUrl(string $githubUrl): string
     {
         $pattern = '%https://github.com/[^/]+?/[^/]+?/[^/]+?/[^/]+?/(?<relative_path>.+)%';
         \Safe\preg_match($pattern, $githubUrl, $matches);
 
         return $matches['relative_path'] ?? throw new RuntimeException('Failed finding relative path');
+    }
+
+    private function assertValidUrl(string $longUrl): void
+    {
+        if ($this->canShorten($longUrl)) {
+            return;
+        }
+        throw new InvalidArgumentException('Invalid github url: ' . $longUrl);
     }
 
     private function getCallable(): ShortenCallableInterface

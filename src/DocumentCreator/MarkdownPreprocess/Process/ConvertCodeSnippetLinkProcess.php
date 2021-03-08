@@ -55,10 +55,9 @@ REGEXP;
         return <<<MARKDOWN
         
         > 
-        > ###### $relativePath 
-        > **Repo:** $markdownLink        
+        > ###### {$relativePath} 
+        > **Repo:** {$markdownLink}        
         MARKDOWN;
-
     }
 
     private function processLocalFile(string $currentFileDir, string $filePath): string

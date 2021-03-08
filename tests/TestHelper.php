@@ -48,7 +48,7 @@ final class TestHelper
      *
      * @throws \LTS\MarkdownTools\ProcessingException
      */
-    public static function setupProcessedFixtures(string $varPath): void
+    public static function setupProcessedFixtures(string $varPath): RunConfig
     {
         self::setupFixtures($varPath);
         $config = new RunConfig(
@@ -56,6 +56,8 @@ final class TestHelper
             cachePath: self::CACHE_PATH
         );
         Factory::create($config)->run($config);
+
+        return $config;
     }
 
     public static function getCache(): Cache

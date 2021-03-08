@@ -13,7 +13,7 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @internal
- * @coversNothing
+ * @covers \LTS\MarkdownTools\DocumentCreator\MarkdownPreprocess\Process\ConvertCodeSnippetLinkProcess
  *
  * @medium
  */
@@ -34,7 +34,10 @@ asdasd asd
 > asdkjh aksjhd khjasd
 > ljhaskdjh kasjhd kjhasd
 
-###### [https://git.io/Jqf6B](https://github.com/LongTermSupport/php-book-markdown-tools/blob/main/var/tests/ConvertCodeSnippetLinkProcess/Fixture/Code/Bang/Bong/Blah.php) var/tests/ConvertCodeSnippetLinkProcess/Fixture/Code/Bang/Bong/Blah.php
+
+> 
+> ###### var/tests/ConvertCodeSnippetLinkProcess/Fixture/Code/Bang/Bong/Blah.php 
+> **Repo:** [https://git.io/Jqf6B](https://github.com/LongTermSupport/php-book-markdown-tools/blob/main/var/tests/ConvertCodeSnippetLinkProcess/Fixture/Code/Bang/Bong/Blah.php)        
 
 ```php
 <?php
@@ -51,7 +54,10 @@ const BLAH = 'blah';
 
 kjha skjdh kjhaskdjh kjhaskdjh kjas kdjh asd kljhkljasd kjh kajsd
 
-###### [https://git.io/Jqf6R](https://github.com/LongTermSupport/php-book-markdown-tools/blob/main/var/tests/ConvertCodeSnippetLinkProcess/Fixture/Code/Bang/Bong/Boo.php) var/tests/ConvertCodeSnippetLinkProcess/Fixture/Code/Bang/Bong/Boo.php
+
+> 
+> ###### var/tests/ConvertCodeSnippetLinkProcess/Fixture/Code/Bang/Bong/Boo.php 
+> **Repo:** [https://git.io/Jqf6R](https://github.com/LongTermSupport/php-book-markdown-tools/blob/main/var/tests/ConvertCodeSnippetLinkProcess/Fixture/Code/Bang/Bong/Boo.php)        
 
 ```php
 <?php

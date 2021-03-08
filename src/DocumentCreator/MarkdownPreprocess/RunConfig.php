@@ -6,6 +6,8 @@ namespace LTS\MarkdownTools\DocumentCreator\MarkdownPreprocess;
 
 use InvalidArgumentException;
 use LTS\MarkdownTools\Config\PathToChaptersConfigInterface;
+use RuntimeException;
+use Safe\Exceptions\FilesystemException;
 
 final class RunConfig implements PathToChaptersConfigInterface
 {
@@ -26,7 +28,15 @@ final class RunConfig implements PathToChaptersConfigInterface
         private ?string $cachePath = null
     ) {
         $this->assertValidGithubUrl();
-        $this->localRepoBasePath = \Safe\realpath($this->localRepoBasePath);
+        try {
+            $this->localRepoBasePath = \Safe\realpath($this->localRepoBasePath);
+        } catch (FilesystemException $exception) {
+            throw new RuntimeException(
+                'Failed getting realpath for ' . $this->localRepoBasePath,
+                $exception->getCode(),
+                $exception
+            );
+        }
     }
 
     public function getCachePath(): ?string
@@ -49,13 +59,6 @@ final class RunConfig implements PathToChaptersConfigInterface
         return $this->localRepoBasePath;
     }
 
-    private function assertValidGithubUrl(): void
-    {
-        if (str_contains($this->githubRepoBaseUrl, '/blob/') === false) {
-            throw new InvalidArgumentException('Github url ' . $this->githubRepoBaseUrl . 'does not include /blob/');
-        }
-    }
-
     public function isConvertCodeToImage(): bool
     {
         return $this->convertCodeToImage;
@@ -66,5 +69,10 @@ final class RunConfig implements PathToChaptersConfigInterface
         return $this->convertOutputToTerminalImage;
     }
 
-
+    private function assertValidGithubUrl(): void
+    {
+        if (str_contains($this->githubRepoBaseUrl, '/blob/') === false) {
+            throw new InvalidArgumentException('Github url ' . $this->githubRepoBaseUrl . 'does not include /blob/');
+        }
+    }
 }

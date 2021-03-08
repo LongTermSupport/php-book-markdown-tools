@@ -5,7 +5,8 @@ const fs = require('fs');
 const puppeteer = require('puppeteer')
 const varPath = __dirname
 const argv = yargs(hideBin(process.argv)).argv
-const screenWidth=550;
+const screenWidth = 562;
+const scaleFactor = 8;
 const codeFilePath = argv.path
 const codeFileLang = argv.lang
 
@@ -60,7 +61,7 @@ const htmlPath = (codeFileLang === 'terminal')
     await page.setViewport({
         height: 1,
         width: screenWidth,
-        deviceScaleFactor: 1
+        deviceScaleFactor: scaleFactor
     });
     page
         .on('console', message =>

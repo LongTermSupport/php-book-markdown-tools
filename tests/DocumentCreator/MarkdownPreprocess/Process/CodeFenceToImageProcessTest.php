@@ -6,12 +6,13 @@ namespace LTS\MarkdownTools\Test\DocumentCreator\MarkdownPreprocess\Process;
 
 use LTS\MarkdownTools\ConsoleOutput;
 use LTS\MarkdownTools\DocumentCreator\MarkdownPreprocess\Process\CodeFenceToImageProcess;
+use LTS\MarkdownTools\DocumentCreator\MarkdownPreprocess\RunConfig;
 use LTS\MarkdownTools\Test\TestHelper;
 use PHPUnit\Framework\TestCase;
 
 /**
  * @internal
- * @coversNothing
+ * @covers \LTS\MarkdownTools\DocumentCreator\MarkdownPreprocess\Process\CodeFenceToImageProcess
  *
  * @medium
  */
@@ -19,6 +20,7 @@ final class CodeFenceToImageProcessTest extends TestCase
 {
     private const TEST_DIR      = TestHelper::VAR_PATH . 'CodeFenceToImageProcessTest/';
     private const CHAPTER1_PATH = self::TEST_DIR . TestHelper::CHAPTER1_SUB_PATH;
+    private const CODE_PATH     = self::TEST_DIR . TestHelper::CODE_SUB_PATH;
     private const EXPECTED      = <<<'MARKDOWN'
 # kjhasdkjh kwjer kjhs adkh kwer
 
@@ -52,8 +54,17 @@ MARKDOWN;
 
     public function setUp(): void
     {
-        TestHelper::setupProcessedFixtures(self::TEST_DIR);
-        $this->process = new CodeFenceToImageProcess(new ConsoleOutput());
+        $config        = TestHelper::setupProcessedFixtures(self::TEST_DIR);
+        $this->process = new CodeFenceToImageProcess(
+            new RunConfig(
+                githubRepoBaseUrl: 'https://github.com/foo/bar/blob/master/',
+                localRepoBasePath: self::CODE_PATH,
+                pathToChapters: $config->getPathToChapters(),
+                convertCodeToImage: true,
+                convertOutputToTerminalImage: true
+            ),
+            new ConsoleOutput()
+        );
     }
 
     /** @test */

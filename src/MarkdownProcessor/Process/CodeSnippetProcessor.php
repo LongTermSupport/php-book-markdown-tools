@@ -38,10 +38,12 @@ REGEXP;
             $lang        = $matches['lang'][$index];
             $fullFind    = $match;
             $fullReplace =
-                $this->getReplace($filePath,
-                                  $snippetType,
-                                  $currentFileDir,
-                                  $lang);
+                $this->getReplace(
+                    $filePath,
+                    $snippetType,
+                    $currentFileDir,
+                    $lang
+                );
             $this->errIfLongerThan($filePath, $snippetType, $fullReplace);
             $currentContents =
                 str_replace($fullFind, $fullReplace, $currentContents);
@@ -63,14 +65,17 @@ REGEXP;
         $linesToLengths = $this->getLinesToLengths($fullReplace);
         $maxLineLength  = max($linesToLengths);
         if ($maxLineLength > self::WARN_LINE_LENGTH_MAX) {
-            $warnings[] = "LINE TOO LONG: $maxLineLength";
+            $warnings[] = "LINE TOO LONG: {$maxLineLength}";
         }
-        if ([] === $warnings) {
+        if ($warnings === []) {
             return;
         }
         $this->output->stdErr("Warning ({$snippetType}) {$filePath}\n\t" . implode("\n\t", $warnings));
     }
 
+    /**
+     * @return array<string,int>
+     */
     private function getLinesToLengths(string $string): array
     {
         $lines  = explode("\n", $string);
@@ -90,10 +95,12 @@ REGEXP;
     ): string {
         foreach ($this->processInterfaces as $process) {
             if ($process->shouldProcess($filePath)) {
-                return $process->getProcessedReplacement($filePath,
-                                                         $snippetType,
-                                                         $currentFileDir,
-                                                         $lang);
+                return $process->getProcessedReplacement(
+                    $filePath,
+                    $snippetType,
+                    $currentFileDir,
+                    $lang
+                );
             }
         }
         throw new RuntimeException('Failed finding processor for snippet: ' .

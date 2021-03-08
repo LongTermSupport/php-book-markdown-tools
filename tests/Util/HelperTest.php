@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @internal
- * @coversNothing
+ * @covers \LTS\MarkdownTools\Util\Helper
  *
  * @small
  */
