@@ -54,6 +54,9 @@ MARKDOWN;
 ```php
 some previous contents here
 ```
+
+blah blahb fkjhkjasd
+asdkljhkjsadkjhasd
 MARKDOWN;
 
     /** @test */
@@ -94,8 +97,9 @@ MARKDOWN;
     {
         TestHelper::createTestFile(contents: self::TEST_CODE_RUNNABLE, filename: __FUNCTION__ . '.php');
         $mdContents = \Safe\sprintf(self::MARKDOWN_EXECUTABLE_SNIPPET, './' . __FUNCTION__ . '.php');
-        $actual     = self::getProcessor()->getProcessedContents($mdContents, TestHelper::VAR_PATH);
-        $expected   = '# some content blah
+        for ($i = 1; $i < 4; $i++) {
+            $mdContents = self::getProcessor()->getProcessedContents($mdContents, TestHelper::VAR_PATH);
+            $expected   = '# some content blah
 
 [Code Executable Snippet](./itCanGetAndRunCodeSnippets.php)
 
@@ -116,7 +120,11 @@ echo add($foo, $bar);
 
 And new we add some stuff3
 
-```';
-        self::assertSame($expected, $actual);
+```
+
+blah blahb fkjhkjasd
+asdkljhkjsadkjhasd';
+            self::assertSame($expected, $mdContents, 'Failed at iteration ' . $i);
+        }
     }
 }
