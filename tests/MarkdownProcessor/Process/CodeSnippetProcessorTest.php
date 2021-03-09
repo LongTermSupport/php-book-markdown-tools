@@ -97,7 +97,7 @@ MARKDOWN;
     {
         TestHelper::createTestFile(contents: self::TEST_CODE_RUNNABLE, filename: __FUNCTION__ . '.php');
         $mdContents = \Safe\sprintf(self::MARKDOWN_EXECUTABLE_SNIPPET, './' . __FUNCTION__ . '.php');
-        for ($i = 1; $i < 4; $i++) {
+        for ($i = 1; $i < 4; ++$i) {
             $mdContents = self::getProcessor()->getProcessedContents($mdContents, TestHelper::VAR_PATH);
             $expected   = '# some content blah
 
