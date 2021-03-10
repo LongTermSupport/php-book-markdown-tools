@@ -5,15 +5,16 @@ declare(strict_types=1);
 namespace LTS\MarkdownTools\MarkdownProcessor;
 
 use LTS\MarkdownTools\Cache;
+use LTS\MarkdownTools\Util\Curl;
 
 final class CachingUrlFetcher
 {
     private const CACHE_PREFIX = __CLASS__;
-    private Cache $cache;
 
-    public function __construct(?Cache $cache = null)
+    public function __construct(private ?Cache $cache = null, private ?Curl $curl = null)
     {
-        $this->cache = $cache ?? new Cache();
+        $this->cache ??= new Cache();
+        $this->curl  ??= new Curl();
     }
 
     public function getContents(string $url): string
@@ -23,7 +24,7 @@ final class CachingUrlFetcher
 
     private function fetchUrl(string $url): string
     {
-        $contents = \Safe\file_get_contents($url);
+        $contents = $this->curl->fetchUrl($url);
         $this->cache->setCache(prefix: self::CACHE_PREFIX, item: $url, contents: $contents);
 
         return $contents;

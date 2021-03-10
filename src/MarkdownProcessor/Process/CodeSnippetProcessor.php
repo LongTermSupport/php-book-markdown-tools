@@ -12,7 +12,7 @@ use RuntimeException;
 final class CodeSnippetProcessor implements ProcessorInterface
 {
     public const FIND_SNIPPETS_REGEX  = <<<REGEXP
-%^\\[(?<snippet_type>Code[^\\[]+Snippet)]\\((?<file_path>[^)]+?)\\)[^`]+?```(?<lang>.+?)\n(?<snippet>.*?)\n```(\n+?###### Output:\n```(?<output_lang>.+?)?(?<command> .+?)?\n(?<output>.*?\n```))?%sm
+%^\\[(?<snippet_type>Code[^\\[]+Snippet)]\\((?<file_path>[^)]+?)\\)[^`]+?```(?<lang>.+?)\n(?<snippet>.*?)\n```(\n+?###### Output:\n+?```(?<output_lang>.+?)?(?<command> .+?)?\n(?<output>.*?\n```))?%sm
 REGEXP;
     public const WARN_NUM_LINES_MAX   = 45;
     public const WARN_LINE_LENGTH_MAX = 75;
