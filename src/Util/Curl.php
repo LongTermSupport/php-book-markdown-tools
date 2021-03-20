@@ -12,8 +12,8 @@ final class Curl
 
     public function fetchUrl(string $url): string
     {
-        $curl = $this->getHandle();
         try {
+            $curl = $this->getHandle();
             \Safe\curl_setopt($curl, CURLOPT_URL, $url);
 
             return \Safe\curl_exec($curl);

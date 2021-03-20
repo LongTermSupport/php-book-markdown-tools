@@ -26,4 +26,12 @@ class CurlTest extends TestCase
         $actual = (new Curl())->fetchUrl($url);
         self::assertMatchesRegularExpression($matchRegex, $actual);
     }
+
+    /** @test */
+    public function itHandles404(): void
+    {
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('Failed getting URL: https://httpstat.us/404');
+        (new Curl())->fetchUrl('https://httpstat.us/404');
+    }
 }

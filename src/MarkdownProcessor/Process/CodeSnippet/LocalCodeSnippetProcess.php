@@ -11,6 +11,7 @@ final class LocalCodeSnippetProcess implements CodeSnippetProcessInterface
 {
     private const DISABLE_XDEBUG = ' unset XDEBUG_SESSION ';
     private const REDIRECT_ERR   = ' 2>&1 ';
+    private const OUTPUT_WIDTH   = 70;
 
     /**
      * A code snippet that should be copied and pasted and we should also run, capture output and past in.
@@ -38,8 +39,8 @@ final class LocalCodeSnippetProcess implements CodeSnippetProcessInterface
         }
         $codeOutput = match ($snippetType) {
             self::EXECUTABLE_TYPE => $this->getOutput($codeRealPath),
-            self::ERROR_TYPE      => $this->getErrorOutput($codeRealPath),
-            default               => throw new RuntimeException('Got invalid snippet type: ' . $snippetType)
+            self::ERROR_TYPE => $this->getErrorOutput($codeRealPath),
+            default => throw new RuntimeException('Got invalid snippet type: ' . $snippetType)
         };
         $filename   = basename($codeRelativePath);
         $command    = "{$lang} {$filename}";
@@ -115,7 +116,7 @@ final class LocalCodeSnippetProcess implements CodeSnippetProcessInterface
 
     private function formatOutput(string $output): string
     {
-        $wrapped = wordwrap($output, width: 60);
+        $wrapped = wordwrap($output, width: self::OUTPUT_WIDTH);
 
         return "\n{$wrapped}\n";
     }
