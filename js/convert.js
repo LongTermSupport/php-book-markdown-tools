@@ -11,13 +11,26 @@ const codeFilePath = argv.path
 const codeFileLang = argv.lang
 
 function escape(rawCode) {
-    return String(rawCode)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#039;');
-    ;
+    return rawCode.replace(/[&<"]/g, function(m) {
+        switch (m) {
+            case '&':
+                return '&amp;';
+            case '<':
+                return '&lt;';
+            case '"':
+                return '&quot;';
+            // default:
+            //     return '&#039;';
+        }
+    });
+    // return encodeURI(rawCode);
+    // return String(rawCode)
+    //     .replace(/</g, '&lt;')
+    //     .replace(/>/g, '&gt;')
+    //     .replace(/&/g, '&amp;')
+    //     .replace(/"/g, '&quot;')
+    //     .replace(/'/g, '&#039;');
+    // ;
 }
 
 
