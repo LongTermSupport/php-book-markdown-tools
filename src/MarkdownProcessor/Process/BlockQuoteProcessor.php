@@ -61,9 +61,7 @@ REGEXP;
     {
         foreach ($this->processors as $blockQuoteProcessor) {
             if ($blockQuoteProcessor->shouldProcess($blockQuote)) {
-                $blockQuote = $blockQuoteProcessor->processBlockQuote($blockQuote);
-
-                return $blockQuote;
+                return $blockQuoteProcessor->processBlockQuote($blockQuote);
             }
         }
 

@@ -13,6 +13,7 @@ use PHPUnit\Framework\TestCase;
  * @internal
  * @covers \LTS\MarkdownTools\MarkdownProcessor\Process\BlockQuote\LinkProcessor
  * @covers \LTS\MarkdownTools\MarkdownProcessor\Process\BlockQuote\WikipediaLinkProcess
+ * @covers \LTS\MarkdownTools\Util\LinkShortener\WikipediaLinkShortener
  *
  * @small
  */

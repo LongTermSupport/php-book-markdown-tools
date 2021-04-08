@@ -2,14 +2,23 @@
 
 declare(strict_types=1);
 
-namespace Util;
+namespace LTS\MarkdownTools\Test\Util;
 
+use Generator;
 use LTS\MarkdownTools\Util\Curl;
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
 
-class CurlTest extends TestCase
+/**
+ * @internal
+ * @coversNothing
+ *
+ * @small
+ */
+final class CurlTest extends TestCase
 {
-    public function provideUrlsToRegex(): \Generator
+    /** @return Generator<string,array<int,string>> */
+    public function provideUrlsToRegex(): Generator
     {
         yield 'git.drupalcode.org/project/drupal' => [
             'https://git.drupalcode.org/project/drupal',
@@ -30,7 +39,7 @@ class CurlTest extends TestCase
     /** @test */
     public function itHandles404(): void
     {
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Failed getting URL: https://httpstat.us/404');
         (new Curl())->fetchUrl('https://httpstat.us/404');
     }

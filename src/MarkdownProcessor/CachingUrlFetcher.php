@@ -10,11 +10,13 @@ use LTS\MarkdownTools\Util\Curl;
 final class CachingUrlFetcher
 {
     private const CACHE_PREFIX = __CLASS__;
+    private Cache $cache;
+    private Curl  $curl;
 
-    public function __construct(private ?Cache $cache = null, private ?Curl $curl = null)
+    public function __construct(?Cache $cache = null, ?Curl $curl = null)
     {
-        $this->cache ??= new Cache();
-        $this->curl  ??= new Curl();
+        $this->cache = $cache ?? new Cache();
+        $this->curl  = $curl ?? new Curl();
     }
 
     public function getContents(string $url): string
