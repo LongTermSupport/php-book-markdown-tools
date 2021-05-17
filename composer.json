@@ -28,14 +28,19 @@
     }
   },
   "require-dev": {
-    "roave/security-advisories": "dev-master",
+    "roave/security-advisories": "dev-latest@dev",
     "phpunit/phpunit": "^9.5",
     "phpmd/phpmd": "dev-master@dev",
     "edmondscommerce/phpqa": "dev-php8@dev"
   },
   "minimum-stability": "stable",
   "config": {
-    "bin-dir": "bin"
+    "bin-dir": "bin",
+    "preferred-install": {
+      "lts/*": "source",
+      "*": "dist"
+    },
+    "sort-packages": true
   },
   "bin": [
     "bin/processMarkdown"

@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
  * @internal
  * @covers \LTS\MarkdownTools\MarkdownProcessor\Process\BlockQuote\LinkProcessor
  *
- * @small
+ * @medium
  */
 final class LinkProcessorTest extends TestCase
 {

@@ -11,8 +11,8 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @internal
- * @covers \LTS\MarkdownTools\MarkdownProcessor\Process\BlockQuote\LinkProcessor
  * @covers \LTS\MarkdownTools\MarkdownProcessor\Process\BlockQuote\GithubLinkProcess
+ * @covers \LTS\MarkdownTools\MarkdownProcessor\Process\BlockQuote\LinkProcessor
  * @covers \LTS\MarkdownTools\Util\LinkShortener\GithubLinkShortener
  *
  * @small
@@ -32,8 +32,6 @@ final class GithubLinkProcessTest extends TestCase
     > ###### symfony/AllMySmsTransportFactory.php at ffc2c1e1dacccf57848d1a63d92fc6fd48250bc1 · symfony/symfony · GitHub
     > https://github.com/symfony/symfony/blob/ffc2c1e1dacccf57848d1a63d92fc6fd48250bc1/src/Symfony/Component/Notifier/Bridge/AllMySms/AllMySmsTransportFactory.php
     MARDOWN;
-
-
 
     private GithubLinkProcess $process;
 
@@ -81,7 +79,7 @@ final class GithubLinkProcessTest extends TestCase
     {
         $actualShouldProcess = $this->process->shouldProcess($block);
         self::assertSame($expectedShouldProcess, $actualShouldProcess);
-        if (false === $actualShouldProcess) {
+        if ($actualShouldProcess === false) {
             return;
         }
         $actualOutput = $this->process->processBlockQuote($block);

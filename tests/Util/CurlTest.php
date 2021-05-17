@@ -11,9 +11,9 @@ use RuntimeException;
 
 /**
  * @internal
- * @coversNothing
+ * @covers \LTS\MarkdownTools\Util\Curl
  *
- * @small
+ * @medium
  */
 final class CurlTest extends TestCase
 {

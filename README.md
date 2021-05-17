@@ -2,23 +2,86 @@
 
 A set of tools to assist with writing markdown and embedding code etc
 
-Built specifically to assist with writing the PHP Book
+Built specifically to assist with writing the PHP Book I have been working on
 
-### Wikipedia Links
+Currently this library provides the following functionality:
 
-You can specify Wikipedia links as block quotes such as
+## Markdown Processing
 
-```markdown
-> https://en.wikipedia.org/wiki/Covariance_and_contravariance_(computer_science)
+This process is designed to update markdown files in place
+
+### Code Snippets
+
+Code snippets can be automatically included by specifying the path to the relevant PHP file
+
+The code snippet can also be run, and the output captured and presented in another code block. 
+
+To enable this, you must write your markdown in this specific style - whitespace sensitive:
+
+#### Standard Code Snippet
+
+The following will copy/paste the contents of the file into the code fence area. You must pre create the empty code
+fence area. Each time you run the process, the code fence area will be updated with the code in the specified file.
+
+The path is taken from the directory that the markdown file is located in.
+
+~~~markdown
+[Code Snippet](./../../../path/to/src/file.php)
+
+```php
+
+```
+~~~
+
+#### Executable Code Snippet
+
+The executable snippet works in exactly the same way as the standard snippet, however it will also create an output 
+block 
+
+~~~markdown
+[Code Executable Snippet](./../../../path/to/src/file.php)
+
+```php
+
+```
+~~~
+
+For example, the full code and output snippet will look like 
+
+~~~markdown
+
+[Code Executable Snippet](./itCanGetAndRunCodeSnippets.php)
+
+```php
+<?php 
+
+$foo=1;
+$bar=2;
+
+function add(int $a, int $b):int{
+    return $a+$b;
+}echo "And new we add some stuff";
+echo add($foo, $bar);
 ```
 
-or if you want to use text highlighting (which is very hit and miss in the browser, seems a Chrome feature and not 
-reliable), then it 
-must be a 
-version URL 
-such as and then the text you want to highlight and also quote is with the special `#:~:text=` marker. I tend to 
-just copy/paste the text into the address bar and let chrome do the url encoding for me. This text will be quoted in 
-the resultant blockquote
-```markdown
-> https://en.wikipedia.org/w/index.php?title=Covariance_and_contravariance_(computer_science)&oldid=1001839343#:~:text=In%20the%20OCaml%20programming%20language,%20for%20example,%20%22list%20of%20Cat%22%20is%20a%20subtype%20of%20%22list%20of%20Animal%22%20because%20the%20list%20type%20constructor%20is%20covariant.%20This%20means%20that%20the%20subtyping%20relation%20of%20the%20simple%20types%20are%20preserved%20for%20the%20complex%20types.%20On%20the%20other%20hand,%20%22function%20from%20Animal%20to%20String%22%20is%20a%20subtype%20of%20%22function%20from%20Cat%20to%20String%22%20because%20the%20function%20type%20constructor%20is%20contravariant%20in%20the%20parameter%20type.
+###### Output:
+```terminal php itCanGetAndRunCodeSnippets.php
+
+And new we add some stuff3
+
 ```
+
+~~~
+
+#### Github Code Snippet
+
+Instead of referencing local code, you can also put a URL to a GitHub code page and embed that, for example:
+
+
+
+The output and code snippet areas will be updated each time the process is run.
+
+### Block Quote Processor
+
+The next major piece of functionality is processing of block quotes. There are a few types of blockquote that are 
+processed, though generally 
