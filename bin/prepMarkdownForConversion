@@ -1,0 +1,31 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+use LTS\MarkdownTools\DocumentCreator\Factory;
+use LTS\MarkdownTools\DocumentCreator\MarkdownPreprocess\RunConfig;
+
+set_error_handler(static function (int $errNo, string $errMsg, string $file, int $line) {
+    throw new \ErrorException("\n\n$errMsg\n\n", $errNo, 1, $file, $line);
+});
+require __DIR__ . '/../vendor/autoload.php';
+
+if ($argc < 3 || $argc > 4) {
+    echo "
+    
+    USAGE:
+    
+    {$argv[0]} 'repo-base-url' 'path-to-code-repo-base' 'path-to-chapters' ('optional - path-to-cache-dir')
+     
+    ";
+    exit(1);
+}
+
+$config = new RunConfig(
+    githubRepoBaseUrl: $argv[1],
+    localRepoBasePath: $argv[2],
+    pathToChapters: $argv[3]
+);
+Factory::create($config)->run($config);
+

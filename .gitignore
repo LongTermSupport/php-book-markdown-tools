@@ -2,5 +2,6 @@
 /vendor/
 bin/*
 !bin/processMarkdown
+!bin/prepMarkdownForConversion
 var/
 .phpunit.result.cache

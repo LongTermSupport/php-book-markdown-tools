@@ -45,7 +45,7 @@ function readFile() {
 function createCodeHtmlFile() {
     let codeHtml = fs.readFileSync(__dirname + '/codeTemplate.html', 'utf8')
     codeHtml = codeHtml
-        .replace('<code></code>', '<code>' + codeContent + '</code>')
+        .replace('<code></code>', '<code>\n' + codeContent + '\n</code>')
         .replace('language-php', 'language-' + codeFileLang)
     const htmlPath = varPath + '/generated-code.html'
     fs.writeFileSync(htmlPath, codeHtml);
